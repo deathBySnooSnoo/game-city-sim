@@ -1,3 +1,7 @@
+/**
+    Class for methods that generate random attributes of a Person
+*/
+
 #include <iostream>
 #include <string>
 #include <cstdlib>

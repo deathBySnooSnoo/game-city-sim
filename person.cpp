@@ -1,3 +1,7 @@
+/**
+    Class for a Person
+*/
+
 #include <iostream>
 #include <string>
 #include <sqlite3.h>
@@ -28,6 +32,7 @@ class Person{
 
     public:
 
+        //Constructor for a new person from outside the settled region
         Person::Person(){
             birthday = people.getRandomBirthday(game.getDate());
             lastName = people.getRandomLastName();
@@ -48,7 +53,8 @@ class Person{
                 home = residential.getAvailable(wealth);
             }
         }
-
+        
+        //Constructor for a newborn
         Person::Person(bool born, person father, person mother){
             female = people.getGender();
             birthday = game.getDate();
@@ -67,7 +73,8 @@ class Person{
             mom = mother;
             personality = people.getRandomPersonality();
         }
-
+    
+        //Constructor for the spouse of an outside settled region spawn
         Person::Person(bool married, bool female, person spouse){
             female = female;
             married = married;
