@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include <string>
+#include <thread>
 
 using namespace std;
 
@@ -38,9 +39,15 @@ class gameTime{
                             day = 1;
                             year++;
                         }
+                        std::thread dayAdvanced(newDay);
+                        dayAdvanced.join();
                     }
                 }
             }
+        }
+
+        void newDay(){
+            
         }
 
     public:
@@ -59,7 +66,7 @@ class gameTime{
             year = 1;
             hour = 7;
             minute = 0;
-            
+            tick();
         }
 
         //start clock from save game; also maybe should be a constructor
