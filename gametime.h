@@ -1,10 +1,16 @@
 #pragma once
+
+#include <sstream>
+#include <cstring>
+#include <iostream>
+
 class gametime {
 
 private:
-	void tick();
+	
 public:
-	string getDate();
+	//string getDate();
+	void gametime::tick();
 	gametime();
 	~gametime();
 };

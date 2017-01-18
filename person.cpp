@@ -1,9 +1,4 @@
 #include "person.h"
-#include <iostream>
-#include <cstring>
-#include "lot.h"
-#include "gametime.h"
-#include "sqlite3.h"
 
 using namespace std;
 
