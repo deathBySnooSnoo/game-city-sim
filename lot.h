@@ -5,6 +5,12 @@
 
 class lot{
 public:
-	//lot(string c, char zt, char d);
+	char getZoneType();
+	char getDensity();
+	int getLandValue();
+	void setZoneType(char zt);
+	void setDensity(char d);
+	void setLandValue(int lv);
+	lot();
 	~lot();
 };

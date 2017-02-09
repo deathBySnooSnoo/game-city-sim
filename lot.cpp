@@ -2,17 +2,39 @@
 
 using namespace std;
 
-string corners;
 string address;
 char zoneType;
 char density;
-/**
-lot::lot(string c, char zt, char d){
-	corners = c;
+int landValue = 100;
+
+char lot::getZoneType() {
+	return zoneType;
+}
+
+char lot::getDensity() {
+	return density;
+}
+
+int lot::getLandValue() {
+	return landValue;
+}
+
+void lot::setZoneType(char zt) {
 	zoneType = zt;
+}
+
+void lot::setDensity(char d) {
 	density = d;
 }
-*/
-lot::~lot(){
+
+void lot::setLandValue(int lv) {
+	landValue = lv;
+}
+
+lot::lot() {
+	
+}
+
+lot::~lot() {
 
 }

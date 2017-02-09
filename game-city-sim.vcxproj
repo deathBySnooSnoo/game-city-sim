@@ -114,12 +114,14 @@
     <ClCompile Include="gamecitysim.cpp" />
     <ClCompile Include="gametime.cpp" />
     <ClCompile Include="lot.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="person.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gamecitysim.h" />
     <ClInclude Include="gametime.h" />
     <ClInclude Include="lot.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="person.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
