@@ -116,6 +116,7 @@
     <ClCompile Include="lot.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="person.cpp" />
+    <ClCompile Include="residentialbuilding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gamecitysim.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="lot.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="person.h" />
+    <ClInclude Include="residentialbuilding.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

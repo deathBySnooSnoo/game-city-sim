@@ -5,7 +5,7 @@ using namespace std;
 string address;
 char zoneType;
 char density;
-int landValue = 100;
+int landValue;
 
 char lot::getZoneType() {
 	return zoneType;
@@ -32,7 +32,7 @@ void lot::setLandValue(int lv) {
 }
 
 lot::lot() {
-	
+	lot::setLandValue(100);
 }
 
 lot::~lot() {
