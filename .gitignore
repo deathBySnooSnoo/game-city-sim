@@ -2,5 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Debug
-/game-city-sim.VC.VC.opendb
+/city-sim-game/bin/Debug
+/city-sim-game/obj/Debug
+/.vs/city-sim-game/v15
