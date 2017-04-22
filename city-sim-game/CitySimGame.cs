@@ -8,11 +8,11 @@ namespace city_sim_game
 {
     class CitySimGame
     {
-        static bool paused = false;
-        static bool quit = false;
-        static Map map = null;
+        private static bool paused = false;
+        private static bool quit = false;
+        private static Map map = null;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             map = new Map(5, 5);
             System.Threading.Thread timeThread = new System.Threading.Thread(TimePassage);
@@ -53,7 +53,7 @@ namespace city_sim_game
             }
         }
 
-        static private void TimePassage()
+        private static void TimePassage()
         {
             GameTime gt = new GameTime();
             while(!quit)

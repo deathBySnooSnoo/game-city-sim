@@ -19,10 +19,10 @@ namespace city_sim_game
         private int[] birthday;
         private Person spouse;
 
-        public Person(int currentYear)
+        public Person()
         {
             Random rand = new Random();
-            birthday = People.GetRandomBirthday(currentYear);
+            birthday = People.GetRandomBirthday();
             if (rand.Next(2) == 1)
             {
                 isMarried = true;
@@ -42,13 +42,13 @@ namespace city_sim_game
             firstName = People.GetRandomFirstName(isFemale);
             if(isMarried && isFemale) 
             {
-                spouse = new Person(currentYear, this);
+                spouse = new Person(this);
                 lastName = spouse.LastName;
             }
             else if(isMarried && !isFemale)
             {
                 lastName = People.GetRandomLastName();
-                spouse = new Person(currentYear, this);
+                spouse = new Person(this);
             }
             else
             {
@@ -57,7 +57,7 @@ namespace city_sim_game
             }
         }
 
-        public Person(int currentYear, Person sp)
+        public Person(Person sp)
         {
             spouse = sp;
             isFemale = !spouse.IsFemale;
@@ -71,7 +71,7 @@ namespace city_sim_game
             {
                 lastName = People.GetRandomLastName();
             }
-            birthday = People.GetRandomBirthday(currentYear);
+            birthday = People.GetRandomBirthday();
         }
 
         public string FirstName

@@ -11,8 +11,9 @@ namespace city_sim_game
         private static Random rand = new Random();
 
         //0-1-2 = m-d-y
-        public static int[] GetRandomBirthday(int currentYear)
+        public static int[] GetRandomBirthday()
         {
+            int currentYear = GameTime.Year;
             int[] birthday = new int[3];
             birthday[2] = rand.Next(currentYear - 90, currentYear - 17);
             birthday[0] = rand.Next(1, 13);

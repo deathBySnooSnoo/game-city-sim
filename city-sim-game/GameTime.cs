@@ -8,11 +8,11 @@ namespace city_sim_game
 {
     class GameTime
     {
-        private int month;
-        private int day;
-        private int year;
-        private int hour;
-        private int minute;
+        private static int month;
+        private static int day;
+        private static int year;
+        private static int hour;
+        private static int minute;
 
         public GameTime()
         {
@@ -50,6 +50,64 @@ namespace city_sim_game
             }
         }
 
+        public static int Month
+        {
+            get
+            {
+                return month;
+            }
+            set
+            {
+                month = value;
+            }
+        }
 
+        public static int Day
+        {
+            get
+            {
+                return day;
+            }
+            set
+            {
+                day = value;
+            }
+        }
+
+        public static int Year
+        {
+            get
+            {
+                return year;
+            }
+            set
+            {
+                year = value;
+            }
+        }
+
+        public static int Hour
+        {
+            get
+            {
+                return hour;
+            }
+            set
+            {
+                hour = value;
+            }
+        }
+
+        public static int Minute
+        {
+            get
+            {
+                return minute;
+            }
+            set
+            {
+                minute = value;
+            }
+        }
     }
 }
