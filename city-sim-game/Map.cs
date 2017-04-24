@@ -9,6 +9,8 @@ namespace city_sim_game
     class Map
     {
         private Lot[,] lots;
+        private List<Tuple<int,int>> availableAg;
+        private List<Farm> farms;
 
         public Map(int x, int y)
         {
@@ -20,13 +22,29 @@ namespace city_sim_game
                     lots[i, j] = new Lot();
                 }
             }
+            availableAg = new List<Tuple<int, int>>();
+            farms = new List<Farm>();
         }
 
         public void NewZone()
         {
-            Lot l = GetLot(ReadXCoordinate(), ReadYCoordinate());
-            l.ZoneType = ReadZoneType();
-            l.Density = ReadDensity();
+            int x = ReadXCoordinate();
+            int y = ReadYCoordinate();
+            Lot l = GetLot(x, y);
+            if (!l.Zoned)
+            {
+                l.ZoneType = ReadZoneType();
+                l.Density = ReadDensity();
+                l.Zoned = true;
+                if(l.ZoneType == 'a')
+                {
+                    availableAg.Add(Tuple.Create(x, y));
+                }
+            }
+            else
+            {
+                Console.WriteLine("Already zoned.");
+            }
         }
 
         public void CheckZone()
@@ -78,6 +96,37 @@ namespace city_sim_game
         {
             Console.WriteLine("density: ");
             return Convert.ToChar(Console.ReadLine());
+        }
+
+        public List<Tuple<int,int>> AvailableAg
+        {
+            get
+            {
+                return availableAg;
+            }
+        }
+
+        public void RemoveAvailableAg(Tuple<int, int> i)
+        {
+            availableAg.Remove(i);
+        }
+
+        public List<Farm> Farms
+        {
+            get
+            {
+                return farms;
+            }
+        }
+
+        public void AddFarm(Farm f)
+        {
+            farms.Add(f);
+        }
+
+        public void RemoveFarm(Farm f)
+        {
+            farms.Remove(f);
         }
     }
 }

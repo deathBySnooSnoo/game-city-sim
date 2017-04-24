@@ -46,6 +46,32 @@ namespace city_sim_game
                         day = 1;
                     }
                     Console.WriteLine(month + "-" + day + "-" + year);
+                    //UpgradeZones();
+                    BuildNewZones();
+                }
+            }
+        }
+
+        public void BuildNewZones()
+        {
+            if (CitySimGame.Map.AvailableAg.Any())
+            {
+                //stupid simple
+                Tuple<int, int> removeLot = null;
+                bool removeLotNecessary = false;
+                foreach(Tuple<int, int> l in CitySimGame.Map.AvailableAg)
+                {
+                    if(CitySimGame.Map.GetLot(l.Item1, l.Item2).LandValue > 90)
+                    {
+                        CitySimGame.Map.AddFarm(new Farm(l));
+                        removeLot = l;
+                        removeLotNecessary = true;
+                        Console.WriteLine("New farm at: " + l.Item1 + "," + l.Item2);
+                    }
+                }
+                if (removeLotNecessary)
+                {
+                    CitySimGame.Map.RemoveAvailableAg(removeLot);
                 }
             }
         }

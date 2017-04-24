@@ -65,5 +65,15 @@ namespace city_sim_game
                 }
             }
         }
+
+        public static Map Map
+        {
+            get
+            {
+                return map;
+            }
+        }
+
+
     }
 }

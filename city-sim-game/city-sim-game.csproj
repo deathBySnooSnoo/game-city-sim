@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="CitySimGame.cs" />
     <Compile Include="CommercialBuilding.cs" />
+    <Compile Include="Demand.cs" />
+    <Compile Include="Farm.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Lot.cs" />
     <Compile Include="Map.cs" />

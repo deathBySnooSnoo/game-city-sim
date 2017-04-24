@@ -12,10 +12,13 @@ namespace city_sim_game
         private char zoneType;
         private char density;
         private int landValue;
+        private float acres;
+        private bool zoned;
 
         public Lot()
         {
             landValue = 100;
+            zoned = false;
         }
 
         public string Address
@@ -63,6 +66,30 @@ namespace city_sim_game
             set
             {
                 landValue = value;
+            }
+        }
+
+        public float Acres
+        {
+            get
+            {
+                return acres;
+            }
+            set
+            {
+                acres = value;
+            }
+        }
+
+        public bool Zoned
+        {
+            get
+            {
+                return zoned;
+            }
+            set
+            {
+                zoned = value;
             }
         }
     }
