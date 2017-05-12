@@ -11,6 +11,10 @@ namespace city_sim_game
         private Lot[,] lots;
         private List<Tuple<int,int>> availableAg;
         private List<Farm> farms;
+        private List<Tuple<int, int>> availableResidential;
+        private List<ResidentialBuilding> housing;
+        private List<Tuple<int, int>> availableCommercial;
+        private List<CommercialBuilding> shops;
 
         public Map(int x, int y)
         {
@@ -39,6 +43,10 @@ namespace city_sim_game
                 if(l.ZoneType == 'a')
                 {
                     availableAg.Add(Tuple.Create(x, y));
+                }
+                else if(l.ZoneType == 'r')
+                {
+                    availableResidential.Add(Tuple.Create(x, y));
                 }
             }
             else
@@ -74,6 +82,7 @@ namespace city_sim_game
             return lots[x, y];
         }
 
+        #region CommandLine Specific Reads
         private int ReadXCoordinate()
         {
             Console.WriteLine("x: ");
@@ -97,6 +106,7 @@ namespace city_sim_game
             Console.WriteLine("density: ");
             return Convert.ToChar(Console.ReadLine());
         }
+#endregion
 
         public List<Tuple<int,int>> AvailableAg
         {
@@ -127,6 +137,37 @@ namespace city_sim_game
         public void RemoveFarm(Farm f)
         {
             farms.Remove(f);
+        }
+
+        public List<Tuple<int, int>> AvailableResidential
+        {
+            get
+            {
+                return availableResidential;
+            }
+        }
+
+        public void RemoveAvailableResidential(Tuple<int, int> i)
+        {
+            availableResidential.Remove(i);
+        }
+
+        public List<ResidentialBuilding> Housing
+        {
+            get
+            {
+                return housing;
+            }
+        }
+
+        public void AddHousing(ResidentialBuilding r)
+        {
+            housing.Add(r);
+        }
+
+        public void RemoveHousing(ResidentialBuilding r)
+        {
+            housing.Remove(r);
         }
     }
 }
