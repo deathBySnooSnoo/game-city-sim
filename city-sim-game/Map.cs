@@ -8,26 +8,24 @@ namespace city_sim_game
 {
     class Map
     {
-        private Lot[,] lots;
-        private List<Tuple<int,int>> availableAg;
+        private List<Lot> lots;
+        private int[,] tiles; //change data type to accommodate road or zone or whatever
+        private List<Tuple<int,int>> availableAg; //change because tiles
         private List<Farm> farms;
-        private List<Tuple<int, int>> availableResidential;
+        private List<Tuple<int, int>> availableResidential; //change because tiles
         private List<ResidentialBuilding> housing;
-        private List<Tuple<int, int>> availableCommercial;
+        private List<Tuple<int, int>> availableCommercial; //change because tiles
         private List<CommercialBuilding> shops;
 
         public Map(int x, int y)
         {
-            lots = new Lot[x,y];
-            for(int i = 0; i < x; i++)
-            {
-                for(int j = 0; j < y; j++)
-                {
-                    lots[i, j] = new Lot();
-                }
-            }
+            tiles = new int[x, y];
             availableAg = new List<Tuple<int, int>>();
             farms = new List<Farm>();
+            availableResidential = new List<Tuple<int, int>>();
+            housing = new List<ResidentialBuilding>();
+            availableCommercial = new List<Tuple<int, int>>();
+            shops = new List<CommercialBuilding>();
         }
 
         public void NewZone()
@@ -79,7 +77,7 @@ namespace city_sim_game
 
         public Lot GetLot(int x, int y)
         {
-            return lots[x, y];
+            return lots[tiles[x, y]];
         }
 
         #region CommandLine Specific Reads
