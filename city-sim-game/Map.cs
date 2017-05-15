@@ -8,9 +8,9 @@ namespace city_sim_game
 {
     class Map
     {
-        private List<Lot> lots;
-        private int[,] tiles; //change data type to accommodate road or zone or whatever
-        private List<Tuple<int,int>> availableAg; //change because tiles
+        private List<Lot> lots; //unnecessary with changes to availability lists?
+        private Tuple<int, char>[,] tiles;
+        private List<Lot> availableAg; //change because tiles; done?
         private List<Farm> farms;
         private List<Tuple<int, int>> availableResidential; //change because tiles
         private List<ResidentialBuilding> housing;
@@ -19,8 +19,8 @@ namespace city_sim_game
 
         public Map(int x, int y)
         {
-            tiles = new int[x, y];
-            availableAg = new List<Tuple<int, int>>();
+            tiles = new Tuple<int, char>[x, y];
+            availableAg = new List<Lot>();
             farms = new List<Farm>();
             availableResidential = new List<Tuple<int, int>>();
             housing = new List<ResidentialBuilding>();
@@ -40,7 +40,7 @@ namespace city_sim_game
                 l.Zoned = true;
                 if(l.ZoneType == 'a')
                 {
-                    availableAg.Add(Tuple.Create(x, y));
+                    availableAg.Add(Tuple.Create(x, y)); //
                 }
                 else if(l.ZoneType == 'r')
                 {
@@ -77,7 +77,7 @@ namespace city_sim_game
 
         public Lot GetLot(int x, int y)
         {
-            return lots[tiles[x, y]];
+            return lots[tiles[x, y].Item1];
         }
 
         #region CommandLine Specific Reads
