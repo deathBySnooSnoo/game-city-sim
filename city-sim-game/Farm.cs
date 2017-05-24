@@ -14,9 +14,9 @@ namespace city_sim_game
         private int possibleEmployees;
         private ResidentialBuilding house;
         private bool family;
-        private Tuple<int, int> lot;
+        private Lot lot;
 
-        public Farm(Tuple<int, int> l)
+        public Farm(Lot l)
         {
             income = 0;
             employees = 0;
@@ -98,7 +98,7 @@ namespace city_sim_game
             }
         }
 
-        public Tuple<int,int> Lot
+        public Lot Lot
         {
             get
             {

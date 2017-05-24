@@ -12,44 +12,65 @@ namespace city_sim_game
         private Tuple<int, char>[,] tiles;
         private List<Lot> availableAg; //change because tiles; done?
         private List<Farm> farms;
-        private List<Tuple<int, int>> availableResidential; //change because tiles
+        private List<Lot> availableResidential; //change because tiles; done?
         private List<ResidentialBuilding> housing;
-        private List<Tuple<int, int>> availableCommercial; //change because tiles
+        private List<Lot> availableCommercial; //change because tiles; done?
         private List<CommercialBuilding> shops;
 
         public Map(int x, int y)
         {
-            tiles = new Tuple<int, char>[x, y];
+            tiles = new Tuple<int, char>[x, y]; //int: position in array specified by char; char: t=transport, r=residential, c=commercial, i=industrial, a=ag
             availableAg = new List<Lot>();
             farms = new List<Farm>();
-            availableResidential = new List<Tuple<int, int>>();
+            availableResidential = new List<Lot>();
             housing = new List<ResidentialBuilding>();
-            availableCommercial = new List<Tuple<int, int>>();
+            availableCommercial = new List<Lot>();
             shops = new List<CommercialBuilding>();
         }
 
-        public void NewZone()
+        public void Zone()
         {
-            int x = ReadXCoordinate();
-            int y = ReadYCoordinate();
-            Lot l = GetLot(x, y);
-            if (!l.Zoned)
+            int index = -1;
+            int x1 = ReadXCoordinate();
+            int y1 = ReadYCoordinate();
+            int x2 = ReadXCoordinate();
+            int y2 = ReadYCoordinate();
+            char z = ReadZoneType();
+            char d = ReadDensity();
+            if (z == 'r')
             {
-                l.ZoneType = ReadZoneType();
-                l.Density = ReadDensity();
-                l.Zoned = true;
-                if(l.ZoneType == 'a')
-                {
-                    availableAg.Add(Tuple.Create(x, y)); //
-                }
-                else if(l.ZoneType == 'r')
-                {
-                    availableResidential.Add(Tuple.Create(x, y));
-                }
+                availableResidential.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = availableResidential.Count;
             }
-            else
+            else if (z == 'c')
             {
-                Console.WriteLine("Already zoned.");
+                availableCommercial.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = availableCommercial.Count;
+            }
+            else if (z == 'a')
+            {
+                availableAg.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = availableAg.Count;
+            }
+            if (index >= 0)
+            {
+                for (int i = x1; i < x2 + 1; i++)
+                {
+                    for (int j = y1; j < y2 + 1; j++)
+                    {
+                        if (tiles[i, j] == null)
+                        {
+                            tiles[i, j] = new Tuple<int, char>(index, z);
+                        }
+                        else if (tiles[i, j].Item2 == z)
+                        {
+                            if (tiles[i, j].Item2 == 'r')
+                            {
+
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -106,7 +127,7 @@ namespace city_sim_game
         }
 #endregion
 
-        public List<Tuple<int,int>> AvailableAg
+        public List<Lot> AvailableAg
         {
             get
             {
@@ -137,7 +158,7 @@ namespace city_sim_game
             farms.Remove(f);
         }
 
-        public List<Tuple<int, int>> AvailableResidential
+        public List<Lot> AvailableResidential
         {
             get
             {

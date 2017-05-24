@@ -13,12 +13,17 @@ namespace city_sim_game
         private char density;
         private int landValue;
         private float acres;
-        private bool zoned;
+        private Tuple<int, int> upperLeftCorner;
+        private Tuple<int, int> lowerRightCorner;
 
-        public Lot()
+        public Lot(char z, char d, Tuple<int, int> ulc, Tuple<int, int> lrc)
         {
+            zoneType = z;
+            density = d;
+            upperLeftCorner = ulc;
+            lowerRightCorner = lrc;
+            acres = (lrc.Item1 - ulc.Item1) * (lrc.Item2 - ulc.Item2) / 43560; //converting sq ft into acres. one tile is 10 sq ft
             landValue = 100;
-            zoned = false;
         }
 
         public string Address
@@ -81,15 +86,27 @@ namespace city_sim_game
             }
         }
 
-        public bool Zoned
+        public Tuple<int, int> UpperLeftCorner
         {
             get
             {
-                return zoned;
+                return upperLeftCorner;
             }
             set
             {
-                zoned = value;
+                upperLeftCorner = value;
+            }
+        }
+
+        public Tuple<int, int> LowerRightCorner
+        {
+            get
+            {
+                return lowerRightCorner;
+            }
+            set
+            {
+                lowerRightCorner = value;
             }
         }
     }
