@@ -8,7 +8,7 @@ namespace city_sim_game
 {
     class Farm
     {
-        private string type;
+        private string type; //"commercial" or family
         private int income;
         private int employees;
         private int possibleEmployees;

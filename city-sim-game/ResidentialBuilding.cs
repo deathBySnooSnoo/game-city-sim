@@ -13,6 +13,7 @@ namespace city_sim_game
         private int totalHomes;
         private int occupiedHomes;
         private int occupants;
+        private Lot lot;
 
         public ResidentialBuilding()
         {
@@ -21,6 +22,16 @@ namespace city_sim_game
             totalHomes = 1;
             occupiedHomes = 0;
             occupants = 0;
+        }
+
+        public ResidentialBuilding(Lot l)
+        {
+            floors = 1;
+            buildingValue = 40000;
+            totalHomes = 1;
+            occupiedHomes = 0;
+            occupants = 0;
+            lot = l;
         }
 
         public void DecreaseOccupiedHomes(int housingDecrease)
@@ -100,6 +111,18 @@ namespace city_sim_game
             set
             {
                 occupants = value;
+            }
+        }
+
+        public Lot Lot
+        {
+            get
+            {
+                return lot;
+            }
+            set
+            {
+                lot = value;
             }
         }
     }

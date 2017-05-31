@@ -9,23 +9,27 @@ namespace city_sim_game
     class Map
     {
         private List<Lot> lots; //unnecessary with changes to availability lists?
-        private Tuple<int, char>[,] tiles;
-        private List<Lot> availableAg; //change because tiles; done?
+        private Tuple<int, char, bool>[,] tiles;
+        private List<Lot> availableAg;
         private List<Farm> farms;
-        private List<Lot> availableResidential; //change because tiles; done?
+        private List<Lot> availableResidential;
         private List<ResidentialBuilding> housing;
-        private List<Lot> availableCommercial; //change because tiles; done?
+        private List<Lot> availableCommercial;
         private List<CommercialBuilding> shops;
+        private List<Lot> availableIndustrial;
+        private List<IndustrialBuilding> industry;
 
         public Map(int x, int y)
         {
-            tiles = new Tuple<int, char>[x, y]; //int: position in array specified by char; char: t=transport, r=residential, c=commercial, i=industrial, a=ag
+            tiles = new Tuple<int, char, bool>[x, y]; //int: position in array specified by char; char: t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water; bool: available
             availableAg = new List<Lot>();
             farms = new List<Farm>();
             availableResidential = new List<Lot>();
             housing = new List<ResidentialBuilding>();
             availableCommercial = new List<Lot>();
             shops = new List<CommercialBuilding>();
+            availableIndustrial = new List<Lot>();
+            industry = new List<IndustrialBuilding>();
         }
 
         public void Zone()
@@ -37,38 +41,28 @@ namespace city_sim_game
             int y2 = ReadYCoordinate();
             char z = ReadZoneType();
             char d = ReadDensity();
-            if (z == 'r')
-            {
-                availableResidential.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                index = availableResidential.Count;
-            }
-            else if (z == 'c')
-            {
-                availableCommercial.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                index = availableCommercial.Count;
-            }
-            else if (z == 'a')
-            {
-                availableAg.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                index = availableAg.Count;
-            }
-            if (index >= 0)
-            {
-                for (int i = x1; i < x2 + 1; i++)
+            for (int i = x1; i < x2 + 1; i++) {
+                for (int j = y1; j < y2 + 1; j++)
                 {
-                    for (int j = y1; j < y2 + 1; j++)
+                    if (z == 'r')
                     {
-                        if (tiles[i, j] == null)
-                        {
-                            tiles[i, j] = new Tuple<int, char>(index, z);
-                        }
-                        else if (tiles[i, j].Item2 == z)
-                        {
-                            if (tiles[i, j].Item2 == 'r')
-                            {
-
-                            }
-                        }
+                        availableResidential.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                        index = availableResidential.Count;
+                    }
+                    else if (z == 'c')
+                    {
+                        availableCommercial.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                        index = availableCommercial.Count;
+                    }
+                    else if (z == 'a')
+                    {
+                        availableAg.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                        index = availableAg.Count;
+                    }
+                    else if (z == 'i')
+                    {
+                        availableIndustrial.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                        index = availableIndustrial.Count;
                     }
                 }
             }
@@ -135,9 +129,9 @@ namespace city_sim_game
             }
         }
 
-        public void RemoveAvailableAg(Tuple<int, int> i)
+        public void RemoveAvailableAg(Lot l)
         {
-            availableAg.Remove(i);
+            availableAg.Remove(l);
         }
 
         public List<Farm> Farms
@@ -166,9 +160,9 @@ namespace city_sim_game
             }
         }
 
-        public void RemoveAvailableResidential(Tuple<int, int> i)
+        public void RemoveAvailableResidential(Lot l)
         {
-            availableResidential.Remove(i);
+            availableResidential.Remove(l);
         }
 
         public List<ResidentialBuilding> Housing
@@ -187,6 +181,68 @@ namespace city_sim_game
         public void RemoveHousing(ResidentialBuilding r)
         {
             housing.Remove(r);
+        }
+
+        public List<Lot> AvailableCommercial
+        {
+            get
+            {
+                return availableCommercial;
+            }
+        }
+
+        public void RemoveAvailableCommercial(Lot l)
+        {
+            availableCommercial.Remove(l);
+        }
+
+        public List<CommercialBuilding> Shops
+        {
+            get
+            {
+                return shops;
+            }
+        }
+
+        public void AddShops(CommercialBuilding c)
+        {
+            shops.Add(c);
+        }
+
+        public void RemoveShops(CommercialBuilding c)
+        {
+            shops.Remove(c);
+        }
+
+        public List<Lot> AvailableIndustrial
+        {
+            get
+            {
+                return availableIndustrial;
+            }
+        }
+
+        public void RemoveAvailableIndustrial(Lot l)
+        {
+            availableIndustrial.Remove(l);
+        }
+
+        public List<IndustrialBuilding> Industry
+        {
+            get
+            {
+                return industry;
+            }
+        }
+
+        public void AddIndustry(IndustrialBuilding i)
+        {
+            industry.Add(i);
+        }
+
+        public void RemoveIndustry(IndustrialBuilding i)
+        {
+            industry.Remove(i);
         }
     }
 }

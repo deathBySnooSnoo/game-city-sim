@@ -6,35 +6,21 @@ using System.Threading.Tasks;
 
 namespace city_sim_game
 {
-    class CommercialBuilding
+    class IndustrialBuilding
     {
-        private int floors;
         private int buildingValue;
         private int businessCount;
         //private Business[] businesses;
         private int availableSpaces;
         private Lot lot;
 
-        public CommercialBuilding(Lot l)
+        public IndustrialBuilding(Lot l)
         {
-            floors = 1;
             buildingValue = 50000;
             businessCount = 1;
             //businessess = new Business[businessCount];
             availableSpaces = 1;
             lot = l;
-        }
-
-        public int Floors
-        {
-            get
-            {
-                return floors;
-            }
-            set
-            {
-                floors = value;
-            }
         }
 
         public int BuildingValue

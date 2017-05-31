@@ -47,6 +47,7 @@
     <Compile Include="Demand.cs" />
     <Compile Include="Farm.cs" />
     <Compile Include="GameTime.cs" />
+    <Compile Include="IndustrialBuilding.cs" />
     <Compile Include="Lot.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="People.cs" />
