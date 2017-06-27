@@ -9,7 +9,7 @@ namespace city_sim_game
     class Map
     {
         private List<Lot> lots; //unnecessary with changes to availability lists?
-        private Tuple<int, char, bool>[,] tiles;
+        private Tile[,] tiles;
         private List<Lot> availableAg;
         private List<Farm> farms;
         private List<Lot> availableResidential;
@@ -21,7 +21,7 @@ namespace city_sim_game
 
         public Map(int x, int y)
         {
-            tiles = new Tuple<int, char, bool>[x, y]; //int: position in array specified by char; char: t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water; bool: available
+            tiles = new Tile[x, y]; //int: position in array specified by char; char: t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water; bool: available
             availableAg = new List<Lot>();
             farms = new List<Farm>();
             availableResidential = new List<Lot>();
@@ -92,7 +92,7 @@ namespace city_sim_game
 
         public Lot GetLot(int x, int y)
         {
-            return lots[tiles[x, y].Item1];
+            return lots[tiles[x, y].ListPosition];
         }
 
         #region CommandLine Specific Reads
