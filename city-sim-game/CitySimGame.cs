@@ -35,7 +35,7 @@ namespace city_sim_game
                     Console.WriteLine("Enter 'new', 'change', 'check', or 'remove': ");
                     input = Console.ReadLine();
                     if(input.Equals("new")){
-                        map.NewZone();
+                        map.Zone();
                     }
                     else if(input.Equals("check"))
                     {
@@ -47,7 +47,7 @@ namespace city_sim_game
                     }
                     else if(input.Equals("remove"))
                     {
-                        map.RemoveZone();
+                        map.Dezone();
                     }
                 }
             }

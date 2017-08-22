@@ -8,61 +8,93 @@ namespace city_sim_game
 {
     class Map
     {
-        private List<Lot> lots; //unnecessary with changes to availability lists?
+        private List<Lot> lots;
         private Tile[,] tiles;
-        private List<Lot> availableAg;
         private List<Farm> farms;
-        private List<Lot> availableResidential;
         private List<ResidentialBuilding> housing;
-        private List<Lot> availableCommercial;
         private List<CommercialBuilding> shops;
-        private List<Lot> availableIndustrial;
         private List<IndustrialBuilding> industry;
+        private bool availableAg;
+        private bool availableResidential;
+        private bool availableCommercial;
+        private bool availableIndustrial;
 
         public Map(int x, int y)
         {
-            tiles = new Tile[x, y]; //int: position in array specified by char; char: t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water; bool: available
-            availableAg = new List<Lot>();
+            tiles = new Tile[x, y];
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    tiles[i, j] = new Tile();
+                }
+            }
+            lots = new List<Lot>();
             farms = new List<Farm>();
-            availableResidential = new List<Lot>();
             housing = new List<ResidentialBuilding>();
-            availableCommercial = new List<Lot>();
             shops = new List<CommercialBuilding>();
-            availableIndustrial = new List<Lot>();
             industry = new List<IndustrialBuilding>();
+            availableAg = false;
+            availableCommercial = false;
+            availableIndustrial = false;
+            availableResidential = false;
         }
 
         public void Zone()
         {
-            int index = -1;
             int x1 = ReadXCoordinate();
             int y1 = ReadYCoordinate();
             int x2 = ReadXCoordinate();
             int y2 = ReadYCoordinate();
             char z = ReadZoneType();
             char d = ReadDensity();
-            for (int i = x1; i < x2 + 1; i++) {
-                for (int j = y1; j < y2 + 1; j++)
+            AddZone(x1, y1, x2, y2, z, d);
+        }
+
+        private void AddZone(int x1, int y1, int x2, int y2, char z, char d)
+        {
+            int index = -1;
+            if (z == 'r')
+            {
+                lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = lots.Count - 1;
+                availableResidential = true;
+            }
+            else if (z == 'c')
+            {
+                lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = lots.Count - 1;
+                availableCommercial = true;
+            }
+            else if (z == 'a')
+            {
+                lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = lots.Count - 1;
+                availableAg = true;
+            }
+            else if (z == 'i')
+            {
+                lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
+                index = lots.Count - 1;
+                availableIndustrial = true;
+            }
+            if (index > -1)
+            {
+                for (int i = x1; i < x2 + 1; i++)
                 {
-                    if (z == 'r')
+                    for (int j = y1; j < y2 + 1; j++)
                     {
-                        availableResidential.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                        index = availableResidential.Count;
-                    }
-                    else if (z == 'c')
-                    {
-                        availableCommercial.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                        index = availableCommercial.Count;
-                    }
-                    else if (z == 'a')
-                    {
-                        availableAg.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                        index = availableAg.Count;
-                    }
-                    else if (z == 'i')
-                    {
-                        availableIndustrial.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
-                        index = availableIndustrial.Count;
+                        if (tiles[i, j].AvailableForZoning)
+                        {
+                            tiles[i, j].ZoningList = z;
+                            tiles[i, j].Key = index;
+                            tiles[i, j].AvailableForZoning = false;
+                        }
+                        else
+                        {
+                            RemoveZone(x1, y1, i, j);
+                            return;
+                        }
                     }
                 }
             }
@@ -82,17 +114,50 @@ namespace city_sim_game
             l.Density = ReadDensity();
         }
 
-        public void RemoveZone()
+        public void Dezone()
         {
-            Lot l = GetLot(ReadXCoordinate(), ReadYCoordinate());
-            l.ZoneType = '\0';
-            l.Density = '\0';
+            int x1 = ReadXCoordinate();
+            int y1 = ReadYCoordinate();
+            int x2 = ReadXCoordinate();
+            int y2 = ReadYCoordinate();
+            RemoveZone(x1, y1, x2, y2);
+        }
 
+        private void RemoveZone(int x1, int y1, int x2, int y2)
+        {
+            for (int i = x2; i > x1 - 1; i--)
+            {
+                for (int j = y2; j > y1 - 1; j--)
+                {
+                    if (i == x1 && j == y1)
+                    {
+                        if (tiles[i, j].ZoningList == 'r')
+                        {
+                            lots.RemoveAt(tiles[i, j].Key);
+                        }
+                        else if (tiles[i, j].ZoningList == 'c')
+                        {
+                            lots.RemoveAt(tiles[i, j].Key);
+                        }
+                        else if (tiles[i, j].ZoningList == 'a')
+                        {
+                            lots.RemoveAt(tiles[i, j].Key);
+                        }
+                        else if (tiles[i, j].ZoningList == 'i')
+                        {
+                            lots.RemoveAt(tiles[i, j].Key);
+                        }
+                    }
+                    tiles[i, j].AvailableForZoning = true;
+                    tiles[i, j].Key = -1;
+                    tiles[i, j].ZoningList = '\0';
+                }
+            }
         }
 
         public Lot GetLot(int x, int y)
         {
-            return lots[tiles[x, y].ListPosition];
+            return lots[tiles[x, y].Key];
         }
 
         #region CommandLine Specific Reads
@@ -121,19 +186,6 @@ namespace city_sim_game
         }
 #endregion
 
-        public List<Lot> AvailableAg
-        {
-            get
-            {
-                return availableAg;
-            }
-        }
-
-        public void RemoveAvailableAg(Lot l)
-        {
-            availableAg.Remove(l);
-        }
-
         public List<Farm> Farms
         {
             get
@@ -150,19 +202,6 @@ namespace city_sim_game
         public void RemoveFarm(Farm f)
         {
             farms.Remove(f);
-        }
-
-        public List<Lot> AvailableResidential
-        {
-            get
-            {
-                return availableResidential;
-            }
-        }
-
-        public void RemoveAvailableResidential(Lot l)
-        {
-            availableResidential.Remove(l);
         }
 
         public List<ResidentialBuilding> Housing
@@ -183,19 +222,6 @@ namespace city_sim_game
             housing.Remove(r);
         }
 
-        public List<Lot> AvailableCommercial
-        {
-            get
-            {
-                return availableCommercial;
-            }
-        }
-
-        public void RemoveAvailableCommercial(Lot l)
-        {
-            availableCommercial.Remove(l);
-        }
-
         public List<CommercialBuilding> Shops
         {
             get
@@ -214,19 +240,6 @@ namespace city_sim_game
             shops.Remove(c);
         }
 
-        public List<Lot> AvailableIndustrial
-        {
-            get
-            {
-                return availableIndustrial;
-            }
-        }
-
-        public void RemoveAvailableIndustrial(Lot l)
-        {
-            availableIndustrial.Remove(l);
-        }
-
         public List<IndustrialBuilding> Industry
         {
             get
@@ -243,6 +256,62 @@ namespace city_sim_game
         public void RemoveIndustry(IndustrialBuilding i)
         {
             industry.Remove(i);
+        }
+
+        public bool AvailableAg
+        {
+            get
+            {
+                return availableAg;
+            }
+            set
+            {
+                availableAg = value;
+            }
+        }
+
+        public bool AvailableResidential
+        {
+            get
+            {
+                return availableResidential;
+            }
+            set
+            {
+                availableResidential = value;
+            }
+        }
+
+        public bool AvailableCommercial
+        {
+            get
+            {
+                return availableCommercial;
+            }
+            set
+            {
+                availableCommercial = value;
+            }
+        }
+
+        public bool AvailableIndustrial
+        {
+            get
+            {
+                return availableIndustrial;
+            }
+            set
+            {
+                availableIndustrial = value;
+            }
+        }
+
+        public List<Lot> Lots
+        {
+            get
+            {
+                return lots;
+            }
         }
     }
 }

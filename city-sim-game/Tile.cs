@@ -9,26 +9,26 @@ namespace city_sim_game
     class Tile
     {
 
-        private int listPosition;
-        private char zoningList;
+        private int key;
+        private char zoningList; //t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water
         private bool availableForZoning;
 
         public Tile()
         {
-            listPosition = 0;
+            key = -1;
             zoningList = '\0';
             availableForZoning = true;
         }
 
-        public int ListPosition
+        public int Key
         {
             get
             {
-                return listPosition;
+                return key;
             }
             set
             {
-                listPosition = value;
+                key = value;
             }
         }
 
