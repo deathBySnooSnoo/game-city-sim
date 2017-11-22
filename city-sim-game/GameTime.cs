@@ -26,20 +26,20 @@ namespace city_sim_game
         public void Tick()
         {
             minute++;
-            if(minute == 60)
+            if (minute == 60)
             {
                 hour++;
                 minute = 0;
-                if(hour == 24)
+                if (hour == 24)
                 {
                     day++;
                     hour = 0;
-                    if(((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) || (month == 2 && day == 29) || ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) && day == 32))
+                    if (((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) || (month == 2 && day == 29) || ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) && day == 32))
                     {
                         month++;
                         day = 1;
                     }
-                    else if(month == 12 && day == 32)
+                    else if (month == 12 && day == 32)
                     {
                         year++;
                         month = 1;
@@ -48,25 +48,46 @@ namespace city_sim_game
                     Console.WriteLine(month + "-" + day + "-" + year);
                     //UpgradeZones();
                     BuildNewZones();
+                    SpawnPeople();
                 }
             }
         }
 
         public void BuildNewZones()
         {
-            if (CitySimGame.Map.AvailableAg)
+            //stupid simple
+            foreach (Lot l in CitySimGame.Map.Lots)
             {
-                //stupid simple
-                foreach(Lot l in CitySimGame.Map.Lots)
+                if (l.LandValue > 90 && l.ZoneType == 'a' && l.Developed == false)
                 {
-                    if(l.LandValue > 90 && l.ZoneType == 'a')
-                    {
-                        CitySimGame.Map.AddFarm(new Farm(l));
-                        l.Developed = true;
-                        Console.WriteLine("New farm at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
-                    }
+                    CitySimGame.Map.AddFarm(new Farm(l));
+                    l.Developed = true;
+                    Console.WriteLine("New farm at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
+                }
+                else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false)
+                {
+                    CitySimGame.Map.AddHousing(new ResidentialBuilding(l));
+                    l.Developed = true;
+                    Console.WriteLine("New house at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
+                }
+                else if (l.LandValue > 90 && l.ZoneType == 'c' && l.Developed == false)
+                {
+                    CitySimGame.Map.AddShops(new CommercialBuilding(l));
+                    l.Developed = true;
+                    Console.WriteLine("New shop at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
+                }
+                else if (l.LandValue > 90 && l.ZoneType == 'i' && l.Developed == false)
+                {
+                    CitySimGame.Map.AddIndustry(new IndustrialBuilding(l));
+                    l.Developed = true;
+                    Console.WriteLine("New factory at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
             }
+        }
+
+        public void SpawnPeople()
+        {
+            if()
         }
 
         public static int Month

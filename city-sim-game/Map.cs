@@ -14,10 +14,10 @@ namespace city_sim_game
         private List<ResidentialBuilding> housing;
         private List<CommercialBuilding> shops;
         private List<IndustrialBuilding> industry;
-        private bool availableAg;
-        private bool availableResidential;
-        private bool availableCommercial;
-        private bool availableIndustrial;
+        private int availableAg;
+        private int availableResidential;
+        private int availableCommercial;
+        private int availableIndustrial;
 
         public Map(int x, int y)
         {
@@ -34,10 +34,10 @@ namespace city_sim_game
             housing = new List<ResidentialBuilding>();
             shops = new List<CommercialBuilding>();
             industry = new List<IndustrialBuilding>();
-            availableAg = false;
-            availableCommercial = false;
-            availableIndustrial = false;
-            availableResidential = false;
+            availableAg = 0;
+            availableCommercial = 0;
+            availableIndustrial = 0;
+            availableResidential = 0;
         }
 
         public void Zone()
@@ -58,25 +58,25 @@ namespace city_sim_game
             {
                 lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
                 index = lots.Count - 1;
-                availableResidential = true;
+                availableResidential++;
             }
             else if (z == 'c')
             {
                 lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
                 index = lots.Count - 1;
-                availableCommercial = true;
+                availableCommercial++;
             }
             else if (z == 'a')
             {
                 lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
                 index = lots.Count - 1;
-                availableAg = true;
+                availableAg++;
             }
             else if (z == 'i')
             {
                 lots.Add(new Lot(z, d, new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2)));
                 index = lots.Count - 1;
-                availableIndustrial = true;
+                availableIndustrial++;
             }
             if (index > -1)
             {
@@ -133,20 +133,21 @@ namespace city_sim_game
                     {
                         if (tiles[i, j].ZoningList == 'r')
                         {
-                            lots.RemoveAt(tiles[i, j].Key);
+                            availableResidential--;
                         }
                         else if (tiles[i, j].ZoningList == 'c')
                         {
-                            lots.RemoveAt(tiles[i, j].Key);
+                            availableCommercial--;
                         }
                         else if (tiles[i, j].ZoningList == 'a')
                         {
-                            lots.RemoveAt(tiles[i, j].Key);
+                            availableAg--;
                         }
                         else if (tiles[i, j].ZoningList == 'i')
                         {
-                            lots.RemoveAt(tiles[i, j].Key);
+                            availableIndustrial--;
                         }
+                        lots.RemoveAt(tiles[i, j].Key);
                     }
                     tiles[i, j].AvailableForZoning = true;
                     tiles[i, j].Key = -1;
@@ -258,7 +259,7 @@ namespace city_sim_game
             industry.Remove(i);
         }
 
-        public bool AvailableAg
+        public int AvailableAg
         {
             get
             {
@@ -270,7 +271,7 @@ namespace city_sim_game
             }
         }
 
-        public bool AvailableResidential
+        public int AvailableResidential
         {
             get
             {
@@ -282,7 +283,7 @@ namespace city_sim_game
             }
         }
 
-        public bool AvailableCommercial
+        public int AvailableCommercial
         {
             get
             {
@@ -294,7 +295,7 @@ namespace city_sim_game
             }
         }
 
-        public bool AvailableIndustrial
+        public int AvailableIndustrial
         {
             get
             {
