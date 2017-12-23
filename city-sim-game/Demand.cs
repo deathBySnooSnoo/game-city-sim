@@ -18,7 +18,7 @@ namespace city_sim_game
             residential = 50;
             commercial = 50;
             industrial = 50;
-            agricultural = 100;
+            agricultural = 50;
         }
 
         public int Residential

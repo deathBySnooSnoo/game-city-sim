@@ -11,8 +11,8 @@ namespace city_sim_game
         private string firstName;
         private string lastName;
         private string occupation;
-        private int[] home;
-        private int[] work;
+        private int home;
+        private int work;
         private bool isFemale;
         private int educationLevel;
         private bool isMarried;
@@ -110,7 +110,7 @@ namespace city_sim_game
             }
         }
 
-        public int[] Home
+        public int Home
         {
             get
             {
@@ -122,7 +122,7 @@ namespace city_sim_game
             }
         }
 
-        public int[] Work
+        public int Work
         {
             get
             {

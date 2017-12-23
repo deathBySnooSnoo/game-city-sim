@@ -58,28 +58,32 @@ namespace city_sim_game
             //stupid simple
             foreach (Lot l in CitySimGame.Map.Lots)
             {
-                if (l.LandValue > 90 && l.ZoneType == 'a' && l.Developed == false)
+                if (l.LandValue > 90 && l.ZoneType == 'a' && l.Developed == false && CitySimGame.Demands.Agricultural > 0)
                 {
                     CitySimGame.Map.AddFarm(new Farm(l));
                     l.Developed = true;
+                    CitySimGame.Demands.Agricultural--;
                     Console.WriteLine("New farm at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
-                else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false)
+                else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false && CitySimGame.Demands.Residential > 0)
                 {
                     CitySimGame.Map.AddHousing(new ResidentialBuilding(l));
                     l.Developed = true;
+                    CitySimGame.Demands.Residential--;
                     Console.WriteLine("New house at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
-                else if (l.LandValue > 90 && l.ZoneType == 'c' && l.Developed == false)
+                else if (l.LandValue > 90 && l.ZoneType == 'c' && l.Developed == false && CitySimGame.Demands.Commercial > 0)
                 {
                     CitySimGame.Map.AddShops(new CommercialBuilding(l));
                     l.Developed = true;
+                    CitySimGame.Demands.Commercial--;
                     Console.WriteLine("New shop at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
-                else if (l.LandValue > 90 && l.ZoneType == 'i' && l.Developed == false)
+                else if (l.LandValue > 90 && l.ZoneType == 'i' && l.Developed == false && CitySimGame.Demands.Industrial > 0)
                 {
                     CitySimGame.Map.AddIndustry(new IndustrialBuilding(l));
                     l.Developed = true;
+                    CitySimGame.Demands.Industrial--;
                     Console.WriteLine("New factory at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
             }
@@ -87,7 +91,23 @@ namespace city_sim_game
 
         public void SpawnPeople()
         {
-            if()
+            if (CitySimGame.Jobs.Count > 0)
+            {
+                Person p = new Person();
+                CitySimGame.AddPerson(p);
+                if (p.IsMarried)
+                {
+                    CitySimGame.AddPerson(p.Spouse);
+                }
+                if (CitySimGame.Map.GetAvailableHouses().Count > 0 || CitySimGame.Map.AvailableResidential > 0)
+                {
+
+                }
+                else
+                {
+                    CitySimGame.Demands.Residential++;
+                }
+            }
         }
 
         public static int Month

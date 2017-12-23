@@ -12,11 +12,15 @@ namespace city_sim_game
         private static bool quit = false;
         private static Map map = null;
         private static List<Person> population = null;
+        private static List<int> jobs = null;
+        private static Demand demands = null;
 
         public static void Main(string[] args)
         {
-            map = new Map(10, 10);
+            map = new Map(100, 100);
             population = new List<Person>();
+            jobs = new List<int>();
+            demands = new Demand();
             System.Threading.Thread timeThread = new System.Threading.Thread(TimePassage);
             timeThread.Start();
             while (!quit)
@@ -36,7 +40,8 @@ namespace city_sim_game
                 {
                     Console.WriteLine("Enter 'new', 'change', 'check', or 'remove': ");
                     input = Console.ReadLine();
-                    if (input.Equals("new")){
+                    if (input.Equals("new"))
+                    {
                         map.Zone();
                     }
                     else if (input.Equals("check"))
@@ -50,6 +55,22 @@ namespace city_sim_game
                     else if (input.Equals("remove"))
                     {
                         map.Dezone();
+                    }
+                }
+                else if (input.Equals("list"))
+                {
+                    Console.WriteLine("Enter 'population', 'demands': ");
+                    input = Console.ReadLine();
+                    if (input.Equals("population"))
+                    {
+                        foreach(Person p  in Population)
+                        {
+                            Console.WriteLine(p.FirstName + " " + p.LastName);
+                        }
+                    }
+                    else if (input.Equals("demands"))
+                    {
+                        Console.WriteLine("Ag: " + Demands.Agricultural + "\nResidential: " + Demands.Residential + "\nCommercial: " + Demands.Commercial + "\nIndustrial: " + Demands.Industrial);
                     }
                 }
             }
@@ -76,6 +97,38 @@ namespace city_sim_game
             }
         }
 
+        public static List<Person> Population
+        {
+            get
+            {
+                return population;
+            }
+        }
 
+        public static void AddPerson(Person p)
+        {
+            population.Add(p);
+        }
+
+        public static List<int> Jobs
+        {
+            get
+            {
+                return jobs;
+            }
+        }
+
+        public static void AddJob(int j)
+        {
+            jobs.Add(j);
+        }
+
+        public static Demand Demands
+        {
+            get
+            {
+                return demands;
+            }
+        }
     }
 }

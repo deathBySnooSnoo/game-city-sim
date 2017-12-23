@@ -161,6 +161,19 @@ namespace city_sim_game
             return lots[tiles[x, y].Key];
         }
 
+        public List<ResidentialBuilding> GetAvailableHouses()
+        {
+            List<ResidentialBuilding> availableHouses = new List<ResidentialBuilding>();
+            foreach (ResidentialBuilding rb in housing)
+            {
+                if (rb.OccupiedHomes < rb.TotalHomes)
+                {
+                    availableHouses.Add(rb);
+                }
+            }
+            return availableHouses;
+        }
+
         #region CommandLine Specific Reads
         private int ReadXCoordinate()
         {
