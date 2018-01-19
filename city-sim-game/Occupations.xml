@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Occupations>
+  <Occupation>
+    <Name>Farmer</Name>
+    <Salary>41000</Salary>
+    <Education>8</Education>
+  </Occupation>
+  <Occupation>
+    <Name>Farm Hand</Name>
+    <Salary>30000</Salary>
+    <Education>8</Education>
+  </Occupation>
+</Occupations>

@@ -63,35 +63,32 @@ namespace city_sim_game
                     CitySimGame.Map.AddFarm(new Farm(l));
                     l.Developed = true;
                     CitySimGame.Demands.Agricultural--;
-                    Console.WriteLine("New farm at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
+                    //CitySimGame.AddJob(new Job())
                 }
-                else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false && CitySimGame.Demands.Residential > 0)
+                else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false && CitySimGame.Demands.LowIncomeResidential > 0)
                 {
                     CitySimGame.Map.AddHousing(new ResidentialBuilding(l));
                     l.Developed = true;
-                    CitySimGame.Demands.Residential--;
-                    Console.WriteLine("New house at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
+                    CitySimGame.Demands.LowIncomeResidential--;
                 }
                 else if (l.LandValue > 90 && l.ZoneType == 'c' && l.Developed == false && CitySimGame.Demands.Commercial > 0)
                 {
                     CitySimGame.Map.AddShops(new CommercialBuilding(l));
                     l.Developed = true;
                     CitySimGame.Demands.Commercial--;
-                    Console.WriteLine("New shop at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
                 else if (l.LandValue > 90 && l.ZoneType == 'i' && l.Developed == false && CitySimGame.Demands.Industrial > 0)
                 {
                     CitySimGame.Map.AddIndustry(new IndustrialBuilding(l));
                     l.Developed = true;
                     CitySimGame.Demands.Industrial--;
-                    Console.WriteLine("New factory at: " + l.UpperLeftCorner + "," + l.LowerRightCorner);
                 }
             }
         }
 
         public void SpawnPeople()
         {
-            if (CitySimGame.Jobs.Count > 0)
+            while (CitySimGame.Jobs.Count > 0 || CitySimGame.Population.Count < 10)
             {
                 Person p = new Person();
                 CitySimGame.AddPerson(p);
@@ -101,11 +98,46 @@ namespace city_sim_game
                 }
                 if (CitySimGame.Map.GetAvailableHouses().Count > 0 || CitySimGame.Map.AvailableResidential > 0)
                 {
-
+                    int totalIncome = 0;
+                    if (p.IsMarried)
+                    {
+                        totalIncome = p.Income + p.Spouse.Income;
+                    }
+                    else
+                    {
+                        totalIncome = p.Income;
+                    }
+                    bool lookingForHouse = true;
+                    if (CitySimGame.Map.GetAvailableHouses().Count > 0)
+                    {
+                        foreach (ResidentialBuilding rb in CitySimGame.Map.GetAvailableHouses())
+                        {
+                            if ((rb.BuildingValue + rb.Lot.LandValue < 2.5 * totalIncome) && (rb.BuildingValue + rb.Lot.LandValue > 1.75 * totalIncome) && lookingForHouse)
+                            {
+                                p.Home = rb;
+                                if (p.IsMarried)
+                                {
+                                    p.Spouse.Home = rb;
+                                    rb.IncreaseOccupants(2);
+                                }
+                                else
+                                {
+                                    rb.IncreaseOccupants(1);
+                                }
+                                rb.IncreaseOccupiedHomes(1);
+                                lookingForHouse = false;
+                                break;
+                            }
+                        }
+                    }
+                    else if (lookingForHouse)
+                    {
+                        
+                    }
                 }
                 else
                 {
-                    CitySimGame.Demands.Residential++;
+                    
                 }
             }
         }

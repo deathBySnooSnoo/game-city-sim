@@ -8,28 +8,56 @@ namespace city_sim_game
 {
     class Demand
     {
-        private int residential;
+        private int lowIncomeResidential;
+        private int mediumIncomeResidential;
+        private int highIncomeResidential;
         private int commercial;
         private int industrial;
         private int agricultural;
 
         public Demand()
         {
-            residential = 50;
+            lowIncomeResidential = 50;
+            mediumIncomeResidential = 50;
+            highIncomeResidential = 50;
             commercial = 50;
             industrial = 50;
             agricultural = 50;
         }
 
-        public int Residential
+        public int LowIncomeResidential
         {
             get
             {
-                return residential;
+                return lowIncomeResidential;
             }
             set
             {
-                residential = value;
+                lowIncomeResidential = value;
+            }
+        }
+
+        public int MediumIncomeResidential
+        {
+            get
+            {
+                return mediumIncomeResidential;
+            }
+            set
+            {
+                mediumIncomeResidential = value;
+            }
+        }
+
+        public int HighIncomeResidential
+        {
+            get
+            {
+                return highIncomeResidential;
+            }
+            set
+            {
+                highIncomeResidential = value;
             }
         }
 

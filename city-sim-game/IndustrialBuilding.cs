@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace city_sim_game
 {
-    class IndustrialBuilding
+    class IndustrialBuilding : BusinessBuilding
     {
         private int buildingValue;
         private int businessCount;
-        //private Business[] businesses;
         private int availableSpaces;
         private Lot lot;
 
@@ -18,7 +17,6 @@ namespace city_sim_game
         {
             buildingValue = 50000;
             businessCount = 1;
-            //businessess = new Business[businessCount];
             availableSpaces = 1;
             lot = l;
         }

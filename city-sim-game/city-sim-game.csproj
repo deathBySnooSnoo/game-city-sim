@@ -42,14 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessBuilding.cs" />
+    <Compile Include="Business.cs" />
     <Compile Include="CitySimGame.cs" />
     <Compile Include="CommercialBuilding.cs" />
     <Compile Include="Demand.cs" />
     <Compile Include="Farm.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="IndustrialBuilding.cs" />
+    <Compile Include="Job.cs" />
     <Compile Include="Lot.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Occupation.cs" />
     <Compile Include="People.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Occupations.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

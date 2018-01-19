@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace city_sim_game
 {
@@ -12,15 +13,45 @@ namespace city_sim_game
         private static bool quit = false;
         private static Map map = null;
         private static List<Person> population = null;
-        private static List<int> jobs = null;
+        private static List<Job> jobs = null;
         private static Demand demands = null;
+        private static List<Occupation> occupations = null;
 
         public static void Main(string[] args)
         {
             map = new Map(100, 100);
             population = new List<Person>();
-            jobs = new List<int>();
+            jobs = new List<Job>();
             demands = new Demand();
+            occupations = new List<Occupation>();
+            XmlTextReader xtr = new XmlTextReader("Occupations.xml");
+            Occupation o = null;
+            bool makingOccupation = false;
+            while (xtr.Read())
+            {
+                if (!makingOccupation)
+                {
+                    makingOccupation = true;
+                    o = new Occupation();
+                }
+                if (xtr.NodeType.Equals(XmlNodeType.Element))
+                {
+                    if (xtr.Name.Equals("Name"))
+                    {
+                        o.Name = xtr.ReadElementContentAsString();
+                    }
+                    else if (xtr.Name.Equals("Salary"))
+                    {
+                        o.Salary = xtr.ReadElementContentAsInt();
+                    }
+                    else if (xtr.Name.Equals("Education"))
+                    {
+                        o.Education = xtr.ReadElementContentAsInt();
+                        occupations.Add(o);
+                        makingOccupation = false;
+                    }
+                }
+            }
             System.Threading.Thread timeThread = new System.Threading.Thread(TimePassage);
             timeThread.Start();
             while (!quit)
@@ -70,7 +101,7 @@ namespace city_sim_game
                     }
                     else if (input.Equals("demands"))
                     {
-                        Console.WriteLine("Ag: " + Demands.Agricultural + "\nResidential: " + Demands.Residential + "\nCommercial: " + Demands.Commercial + "\nIndustrial: " + Demands.Industrial);
+                        Console.WriteLine("Ag: " + Demands.Agricultural + "\nResidential: " + Demands.LowIncomeResidential + "\nCommercial: " + Demands.Commercial + "\nIndustrial: " + Demands.Industrial);
                     }
                 }
             }
@@ -110,7 +141,7 @@ namespace city_sim_game
             population.Add(p);
         }
 
-        public static List<int> Jobs
+        public static List<Job> Jobs
         {
             get
             {
@@ -118,7 +149,7 @@ namespace city_sim_game
             }
         }
 
-        public static void AddJob(int j)
+        public static void AddJob(Job j)
         {
             jobs.Add(j);
         }
@@ -128,6 +159,14 @@ namespace city_sim_game
             get
             {
                 return demands;
+            }
+        }
+
+        public static List<Occupation> Occupations
+        {
+            get
+            {
+                return occupations;
             }
         }
     }

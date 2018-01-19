@@ -36,7 +36,7 @@ namespace city_sim_game
         {
             string[] mNames = { "steve", "dan", "fred" };
             string[] fNames = { "brittany", "katie", "samantha" };
-            if(isFemale)
+            if (isFemale)
             {
                 return fNames[rand.Next(fNames.Length)];
             }
@@ -50,6 +50,12 @@ namespace city_sim_game
         {
             string[] names = { "smith", "drews", "williams" };
             return names[rand.Next(names.Length)];
+        }
+
+        public static Occupation GetRandomOccupation(int education)
+        {
+            List<Occupation> suitableOccupations = Occupation.getOccupationsByEducation(education);
+            return suitableOccupations[rand.Next(suitableOccupations.Count - 1)];
         }
     }
 }

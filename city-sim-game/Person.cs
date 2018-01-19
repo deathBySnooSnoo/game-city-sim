@@ -11,13 +11,15 @@ namespace city_sim_game
         private string firstName;
         private string lastName;
         private string occupation;
-        private int home;
-        private int work;
+        private int income;
+        private ResidentialBuilding home;
+        private Business work;
         private bool isFemale;
         private int educationLevel;
         private bool isMarried;
         private int[] birthday;
         private Person spouse;
+        private static Random rand = new Random();
 
         public Person()
         {
@@ -31,7 +33,7 @@ namespace city_sim_game
             {
                 isMarried = false;
             }
-            if(rand.Next(2) == 1)
+            if (rand.Next(2) == 1)
             {
                 isFemale = true;
             }
@@ -40,12 +42,12 @@ namespace city_sim_game
                 isFemale = false;
             }
             firstName = People.GetRandomFirstName(isFemale);
-            if(isMarried && isFemale) 
+            if (isMarried && isFemale) 
             {
                 spouse = new Person(this);
                 lastName = spouse.LastName;
             }
-            else if(isMarried && !isFemale)
+            else if (isMarried && !isFemale)
             {
                 lastName = People.GetRandomLastName();
                 spouse = new Person(this);
@@ -55,6 +57,10 @@ namespace city_sim_game
                 lastName = People.GetRandomLastName();
                 spouse = null;
             }
+            educationLevel = rand.Next(8, 20);
+            Occupation occ = People.GetRandomOccupation(educationLevel);
+            occupation = occ.Name;
+            income = occ.Salary;
         }
 
         public Person(Person sp)
@@ -63,7 +69,7 @@ namespace city_sim_game
             isFemale = !spouse.IsFemale;
             isMarried = true;
             firstName = People.GetRandomFirstName(isFemale);
-            if(isFemale)
+            if (isFemale)
             {
                 lastName = spouse.LastName;
             }
@@ -72,6 +78,10 @@ namespace city_sim_game
                 lastName = People.GetRandomLastName();
             }
             birthday = People.GetRandomBirthday();
+            educationLevel = rand.Next(8, 20);
+            Occupation occ = People.GetRandomOccupation(educationLevel);
+            occupation = occ.Name;
+            income = occ.Salary;
         }
 
         public string FirstName
@@ -110,7 +120,19 @@ namespace city_sim_game
             }
         }
 
-        public int Home
+        public int Income
+        {
+            get
+            {
+                return income;
+            }
+            set
+            {
+                income = value;
+            }
+        }
+
+        public ResidentialBuilding Home
         {
             get
             {
@@ -122,7 +144,7 @@ namespace city_sim_game
             }
         }
 
-        public int Work
+        public Business Work
         {
             get
             {
