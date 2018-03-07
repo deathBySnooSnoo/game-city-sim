@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Xml;
 
 namespace city_sim_game
@@ -13,46 +13,19 @@ namespace city_sim_game
         private static bool quit = false;
         private static Map map = null;
         private static List<Person> population = null;
-        private static List<Job> jobs = null;
+        private static List<Job> availableJobs = null;
         private static Demand demands = null;
-        private static List<Occupation> occupations = null;
+        private static Occupation[] occupations = null;
+        private static BusinessType[] businessTypes = null;
+        private static List<Business> businesses = null;
+        private static string[] maleNames = null;
+        private static string[] femaleNames = null;
+        private static string[] lastNames = null;
 
         public static void Main(string[] args)
         {
-            map = new Map(100, 100);
-            population = new List<Person>();
-            jobs = new List<Job>();
-            demands = new Demand();
-            occupations = new List<Occupation>();
-            XmlTextReader xtr = new XmlTextReader("Occupations.xml");
-            Occupation o = null;
-            bool makingOccupation = false;
-            while (xtr.Read())
-            {
-                if (!makingOccupation)
-                {
-                    makingOccupation = true;
-                    o = new Occupation();
-                }
-                if (xtr.NodeType.Equals(XmlNodeType.Element))
-                {
-                    if (xtr.Name.Equals("Name"))
-                    {
-                        o.Name = xtr.ReadElementContentAsString();
-                    }
-                    else if (xtr.Name.Equals("Salary"))
-                    {
-                        o.Salary = xtr.ReadElementContentAsInt();
-                    }
-                    else if (xtr.Name.Equals("Education"))
-                    {
-                        o.Education = xtr.ReadElementContentAsInt();
-                        occupations.Add(o);
-                        makingOccupation = false;
-                    }
-                }
-            }
-            System.Threading.Thread timeThread = new System.Threading.Thread(TimePassage);
+            Init();
+            Thread timeThread = new Thread(TimePassage);
             timeThread.Start();
             while (!quit)
             {
@@ -120,6 +93,90 @@ namespace city_sim_game
             }
         }
 
+        public static void Init()
+        {
+            map = new Map(100, 100);
+            population = new List<Person>();
+            availableJobs = new List<Job>();
+            demands = new Demand();
+            businesses = new List<Business>();
+            List<BusinessType> bTypes = new List<BusinessType>();
+            XmlTextReader xtrBusinessTypes = new XmlTextReader("BusinessTypes.xml");
+            bool makingBusinessType = false;
+            BusinessType bt = null;
+            string title = "";
+            while (xtrBusinessTypes.Read())
+            {
+                if (!makingBusinessType)
+                {
+                    makingBusinessType = true;
+                    bt = new BusinessType();
+                }
+                if (xtrBusinessTypes.NodeType.Equals(XmlNodeType.Element))
+                {
+                    if (xtrBusinessTypes.Name.Equals("Zoning"))
+                    {
+                        bt.Zoning = Convert.ToChar(xtrBusinessTypes.ReadElementContentAsString());
+                    }
+                    else if (xtrBusinessTypes.Name.Equals("Type"))
+                    {
+                        bt.Type = xtrBusinessTypes.ReadElementContentAsString();
+                    }
+                    else if (xtrBusinessTypes.Name.Equals("Title"))
+                    {
+                        title = xtrBusinessTypes.ReadElementContentAsString();
+                    }
+                    else if (xtrBusinessTypes.Name.Equals("Count"))
+                    {
+                        bt.Jobs.Add(title, xtrBusinessTypes.ReadElementContentAsInt());
+                        title = "";
+                    }
+                }
+                else if (xtrBusinessTypes.NodeType.Equals(XmlNodeType.EndElement))
+                {
+                    if (xtrBusinessTypes.Name.Equals("Business"))
+                    {
+                        bTypes.Add(bt);
+                        makingBusinessType = false;
+                    }
+                }
+            }
+            businessTypes = bTypes.ToArray();
+            List<Occupation> occs = new List<Occupation>();
+            XmlTextReader xtrOccupations = new XmlTextReader("Occupations.xml");
+            Occupation o = null;
+            bool makingOccupation = false;
+            while (xtrOccupations.Read())
+            {
+                if (!makingOccupation)
+                {
+                    makingOccupation = true;
+                    o = new Occupation();
+                }
+                if (xtrOccupations.NodeType.Equals(XmlNodeType.Element))
+                {
+                    if (xtrOccupations.Name.Equals("Name"))
+                    {
+                        o.Name = xtrOccupations.ReadElementContentAsString();
+                    }
+                    else if (xtrOccupations.Name.Equals("Salary"))
+                    {
+                        o.Salary = xtrOccupations.ReadElementContentAsInt();
+                    }
+                    else if (xtrOccupations.Name.Equals("Education"))
+                    {
+                        o.Education = xtrOccupations.ReadElementContentAsInt();
+                        occs.Add(o);
+                        makingOccupation = false;
+                    }
+                }
+            }
+            occupations = occs.ToArray();
+            femaleNames = System.IO.File.ReadAllLines("FemaleNames.txt");
+            maleNames = System.IO.File.ReadAllLines("MaleNames.txt");
+            lastNames = System.IO.File.ReadAllLines("LastNames.txt");
+        }
+
         public static Map Map
         {
             get
@@ -136,22 +193,12 @@ namespace city_sim_game
             }
         }
 
-        public static void AddPerson(Person p)
-        {
-            population.Add(p);
-        }
-
-        public static List<Job> Jobs
+        public static List<Job> AvailableJobs
         {
             get
             {
-                return jobs;
+                return availableJobs;
             }
-        }
-
-        public static void AddJob(Job j)
-        {
-            jobs.Add(j);
         }
 
         public static Demand Demands
@@ -162,11 +209,63 @@ namespace city_sim_game
             }
         }
 
-        public static List<Occupation> Occupations
+        public static Occupation[] Occupations
         {
             get
             {
                 return occupations;
+            }
+        }
+
+        public static BusinessType[] BusinessTypes
+        {
+            get
+            {
+                return businessTypes;
+            }
+        }
+
+        public static List<Business> Businesses
+        {
+            get
+            {
+                return businesses;
+            }
+        }
+
+        public static string[] FemaleNames
+        {
+            get
+            {
+                return femaleNames;
+            }
+            set
+            {
+                femaleNames = value;
+            }
+        }
+
+        public static string[] MaleNames
+        {
+            get
+            {
+                return maleNames;
+            }
+            set
+            {
+                maleNames = value;
+            }
+        }
+
+        public static string[] LastNames
+        {
+            get
+            {
+                return lastNames;
+            }
+            set
+            {
+                lastNames = value;
             }
         }
     }

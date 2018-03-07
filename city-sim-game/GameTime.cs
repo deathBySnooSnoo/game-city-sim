@@ -49,11 +49,12 @@ namespace city_sim_game
                     //UpgradeZones();
                     BuildNewZones();
                     SpawnPeople();
+                    EmploymentChange();
                 }
             }
         }
 
-        public void BuildNewZones()
+        private void BuildNewZones()
         {
             //stupid simple
             foreach (Lot l in CitySimGame.Map.Lots)
@@ -63,7 +64,6 @@ namespace city_sim_game
                     CitySimGame.Map.AddFarm(new Farm(l));
                     l.Developed = true;
                     CitySimGame.Demands.Agricultural--;
-                    //CitySimGame.AddJob(new Job())
                 }
                 else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false && CitySimGame.Demands.LowIncomeResidential > 0)
                 {
@@ -76,6 +76,7 @@ namespace city_sim_game
                     CitySimGame.Map.AddShops(new CommercialBuilding(l));
                     l.Developed = true;
                     CitySimGame.Demands.Commercial--;
+                    CitySimGame.Businesses.Add(new Business(BusinessType.GetBusinessByZoning('c')[0].Type)); //actually shit, but testing
                 }
                 else if (l.LandValue > 90 && l.ZoneType == 'i' && l.Developed == false && CitySimGame.Demands.Industrial > 0)
                 {
@@ -86,61 +87,30 @@ namespace city_sim_game
             }
         }
 
-        public void SpawnPeople()
+        private void SpawnPeople()
         {
-            while (CitySimGame.Jobs.Count > 0 || CitySimGame.Population.Count < 10)
+            while (CitySimGame.AvailableJobs.Count > 0 || CitySimGame.Population.Count < 10)
             {
                 Person p = new Person();
-                CitySimGame.AddPerson(p);
+                CitySimGame.Population.Add(p);
                 if (p.IsMarried)
                 {
-                    CitySimGame.AddPerson(p.Spouse);
-                }
-                if (CitySimGame.Map.GetAvailableHouses().Count > 0 || CitySimGame.Map.AvailableResidential > 0)
-                {
-                    int totalIncome = 0;
-                    if (p.IsMarried)
-                    {
-                        totalIncome = p.Income + p.Spouse.Income;
-                    }
-                    else
-                    {
-                        totalIncome = p.Income;
-                    }
-                    bool lookingForHouse = true;
-                    if (CitySimGame.Map.GetAvailableHouses().Count > 0)
-                    {
-                        foreach (ResidentialBuilding rb in CitySimGame.Map.GetAvailableHouses())
-                        {
-                            if ((rb.BuildingValue + rb.Lot.LandValue < 2.5 * totalIncome) && (rb.BuildingValue + rb.Lot.LandValue > 1.75 * totalIncome) && lookingForHouse)
-                            {
-                                p.Home = rb;
-                                if (p.IsMarried)
-                                {
-                                    p.Spouse.Home = rb;
-                                    rb.IncreaseOccupants(2);
-                                }
-                                else
-                                {
-                                    rb.IncreaseOccupants(1);
-                                }
-                                rb.IncreaseOccupiedHomes(1);
-                                lookingForHouse = false;
-                                break;
-                            }
-                        }
-                    }
-                    else if (lookingForHouse)
-                    {
-                        
-                    }
-                }
-                else
-                {
-                    
+                    CitySimGame.Population.Add(p.Spouse);
                 }
             }
         }
+
+        private void EmploymentChange()
+        {
+            if (CitySimGame.AvailableJobs.Count > 0)
+            {
+                foreach (Person p in CitySimGame.Population)
+                {
+                    p.FindJob();
+                }
+            }
+        }
+
 
         public static int Month
         {

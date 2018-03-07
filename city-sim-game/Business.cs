@@ -8,17 +8,42 @@ namespace city_sim_game
 {
     class Business
     {
-        private int employees;
         private string name;
         private BusinessBuilding building;
-        private char businessType;
+        private string bizType;
         private int revenue;
+        private int employees;
+        private List<Job> jobs;
 
-        public Business()
+        public Business(string bt)
         {
-            employees = 0;
             name = "";
+            bizType = bt;
+            revenue = 0;
+            employees = 0;
+            jobs = new List<Job>();
+            foreach (KeyValuePair<string, int> j in BusinessType.GetBusinessByType(bt).Jobs)
+            {
+                for (int i = 0; i < j.Value; i++)
+                {
+                    Job temp = new Job(this, Occupation.GetOccupationByName(j.Key));
+                    CitySimGame.AvailableJobs.Add(temp);
+                    jobs.Add(temp);
+                }
+            }
+            building = CitySimGame.Map.Shops[0]; //crap
+        }
 
+        public void HireEmployee(Person employee, Job job)
+        {
+            foreach (Job j in jobs)
+            {
+                if (j.Equals(job))
+                {
+                    j.Worker = employee;
+                    employees++;
+                }
+            }
         }
 
         public int Employees
@@ -57,15 +82,15 @@ namespace city_sim_game
             }
         }
 
-        public char BusinessType
+        public string BizType
         {
             get
             {
-                return businessType;
+                return bizType;
             }
             set
             {
-                businessType = value;
+                bizType = value;
             }
         }
 
@@ -78,6 +103,18 @@ namespace city_sim_game
             set
             {
                 revenue = value;
+            }
+        }
+
+        public List<Job> Jobs
+        {
+            get
+            {
+                return jobs;
+            }
+            set
+            {
+                jobs = value;
             }
         }
     }

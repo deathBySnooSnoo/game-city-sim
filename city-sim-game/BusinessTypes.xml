@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BusinessTypes>
+  <Business>
+    <Zoning>a</Zoning>
+    <Type>small farm</Type>
+    <Job>
+      <Title>farmer</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>farm hand</Title>
+      <Count>2</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>convenience store</Type>
+    <Job>
+      <Title>cashier</Title>
+      <Count>6</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>drug store</Type>
+    <Job>
+      <Title>pharmacist</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>cosmetic sales</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>soda jerk</Title>
+      <Count>1</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>butcher shop</Type>
+    <Job>
+      <Title>butcher</Title>
+      <Count>1</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>bakery</Type>
+    <Job>
+      <Title>baker</Title>
+      <Count>2</Count>
+    </Job>
+    <Job>
+      <Title>cake decorator</Title>
+      <Count>1</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>gas station</Type>
+    <Job>
+      <Title>cashier</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>gas attendant</Title>
+      <Count>1</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>grocery store</Type>
+    <Job>
+      <Title>general manager</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>assistant manager</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>cashier</Title>
+      <Count>5</Count>
+    </Job>
+    <Job>
+      <Title>produce</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>meat</Title>
+      <Count>1</Count>
+    </Job>
+    <Job>
+      <Title>stocker</Title>
+      <Count>2</Count>
+    </Job>
+  </Business>
+  <Business>
+    <Zoning>c</Zoning>
+    <Type>shoe store</Type>
+    <Job>
+      <Title>salesman</Title>
+      <Count>2</Count>
+    </Job>
+  </Business>
+</BusinessTypes>

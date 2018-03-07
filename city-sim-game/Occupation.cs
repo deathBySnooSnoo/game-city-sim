@@ -17,20 +17,20 @@ namespace city_sim_game
 
         }
 
-        public static List<Occupation> getOccupationsByEducation(int education)
+        public static Occupation[] GetOccupationsByEducation(int education)
         {
             List<Occupation> occupations = new List<Occupation>();
             foreach (Occupation o in CitySimGame.Occupations)
             {
-                if (o.Education < education)
+                if (o.Education <= education)
                 {
                     occupations.Add(o);
                 }
             }
-            return occupations;
+            return occupations.ToArray();
         }
 
-        public static Occupation getOccupationByName(string occupationName)
+        public static Occupation GetOccupationByName(string occupationName)
         {
             foreach (Occupation o in CitySimGame.Occupations)
             {

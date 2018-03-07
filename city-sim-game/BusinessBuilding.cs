@@ -8,6 +8,6 @@ namespace city_sim_game
 {
     abstract class BusinessBuilding
     {
-
+        private int squareFeet;
     }
 }

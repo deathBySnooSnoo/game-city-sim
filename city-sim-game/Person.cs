@@ -60,7 +60,7 @@ namespace city_sim_game
             educationLevel = rand.Next(8, 20);
             Occupation occ = People.GetRandomOccupation(educationLevel);
             occupation = occ.Name;
-            income = occ.Salary;
+            work = null;
         }
 
         public Person(Person sp)
@@ -81,7 +81,24 @@ namespace city_sim_game
             educationLevel = rand.Next(8, 20);
             Occupation occ = People.GetRandomOccupation(educationLevel);
             occupation = occ.Name;
-            income = occ.Salary;
+            work = null;
+        }
+
+        public void FindJob()
+        {
+            if (work == null)
+            {
+                foreach (Job j in CitySimGame.AvailableJobs)
+                {
+                    if (occupation.Equals(j.Name))
+                    {
+                        work = j.Workplace;
+                        CitySimGame.AvailableJobs.Remove(j);
+                        j.Workplace.HireEmployee(this, j);
+                        break;
+                    }
+                }
+            }
         }
 
         public string FirstName

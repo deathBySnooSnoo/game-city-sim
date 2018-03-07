@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="BusinessBuilding.cs" />
     <Compile Include="Business.cs" />
+    <Compile Include="BusinessType.cs" />
     <Compile Include="CitySimGame.cs" />
     <Compile Include="CommercialBuilding.cs" />
     <Compile Include="Demand.cs" />
@@ -65,7 +66,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Occupations.xml" />
+    <Content Include="BusinessTypes.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FemaleNames.txt" />
+    <Content Include="LastNames.txt" />
+    <Content Include="MaleNames.txt" />
+    <Content Include="Occupations.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

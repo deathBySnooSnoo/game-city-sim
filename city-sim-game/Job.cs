@@ -9,10 +9,19 @@ namespace city_sim_game
     class Job : Occupation
     {
         private Business workplace;
+        private Occupation occupationType;
+        private Person worker;
+        private int[] startTime; //{hour, minute}
+        private int[] endTime; //{hour, minute}
 
-        public Job(Business b)
+        public Job(Business b, Occupation ot)
         {
             workplace = b;
+            occupationType = ot;
+            Salary = occupationType.Salary;
+            Name = occupationType.Name;
+            Education = occupationType.Education;
+            worker = null;
         }
 
         public Business Workplace
@@ -24,6 +33,50 @@ namespace city_sim_game
             set
             {
                 workplace = value;
+            }
+        }
+
+        public Occupation OccupationType
+        {
+            get
+            {
+                return occupationType;
+            }
+        }
+
+        public Person Worker
+        {
+            get
+            {
+                return worker;
+            }
+            set
+            {
+                worker = value;
+            }
+        }
+
+        public int[] StartTime
+        {
+            get
+            {
+                return startTime;
+            }
+            set
+            {
+                startTime = value;
+            }
+        }
+
+        public int[] EndTime
+        {
+            get
+            {
+                return endTime;
+            }
+            set
+            {
+                endTime = value;
             }
         }
     }

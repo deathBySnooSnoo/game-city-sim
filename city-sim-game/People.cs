@@ -34,28 +34,32 @@ namespace city_sim_game
 
         public static string GetRandomFirstName(bool isFemale)
         {
-            string[] mNames = { "steve", "dan", "fred" };
-            string[] fNames = { "brittany", "katie", "samantha" };
             if (isFemale)
             {
-                return fNames[rand.Next(fNames.Length)];
+                return CitySimGame.FemaleNames[rand.Next(CitySimGame.FemaleNames.Length)];
             }
             else
             {
-                return mNames[rand.Next(mNames.Length)];
+                return CitySimGame.MaleNames[rand.Next(CitySimGame.MaleNames.Length)];
             }
         }
 
         public static string GetRandomLastName()
         {
-            string[] names = { "smith", "drews", "williams" };
-            return names[rand.Next(names.Length)];
+            return CitySimGame.LastNames[rand.Next(CitySimGame.LastNames.Length)];
         }
 
         public static Occupation GetRandomOccupation(int education)
         {
-            List<Occupation> suitableOccupations = Occupation.getOccupationsByEducation(education);
-            return suitableOccupations[rand.Next(suitableOccupations.Count - 1)];
+            Occupation[] suitableOccupations = Occupation.GetOccupationsByEducation(education);
+            if (suitableOccupations == null)
+            {
+                return null;
+            }
+            else
+            {
+                return suitableOccupations[rand.Next(suitableOccupations.Length)];
+            }
         }
     }
 }
