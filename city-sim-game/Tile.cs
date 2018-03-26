@@ -12,6 +12,7 @@ namespace city_sim_game
         private int key;
         private char zoningList; //t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water
         private bool availableForZoning;
+        private bool fertileSoil;
 
         public Tile()
         {
@@ -53,6 +54,18 @@ namespace city_sim_game
             set
             {
                 availableForZoning = value;
+            }
+        }
+
+        public bool FertileSoil
+        {
+            get
+            {
+                return fertileSoil;
+            }
+            set
+            {
+                fertileSoil = value;
             }
         }
     }
