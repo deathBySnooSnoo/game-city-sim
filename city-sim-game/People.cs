@@ -61,5 +61,17 @@ namespace city_sim_game
                 return suitableOccupations[rand.Next(suitableOccupations.Length)];
             }
         }
+
+        public static bool HaveBaby()
+        {
+            if (rand.Next(1, 1000) < 14)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

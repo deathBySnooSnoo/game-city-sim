@@ -19,11 +19,12 @@ namespace city_sim_game
         private bool isMarried;
         private int[] birthday;
         private Person spouse;
+        private Person father;
+        private Person mother;
         private static Random rand = new Random();
 
         public Person()
         {
-            Random rand = new Random();
             birthday = People.GetRandomBirthday();
             if (rand.Next(2) == 1)
             {
@@ -58,9 +59,9 @@ namespace city_sim_game
                 spouse = null;
             }
             educationLevel = rand.Next(8, 20);
-            Occupation occ = People.GetRandomOccupation(educationLevel);
-            occupation = occ.Name;
+            occupation = People.GetRandomOccupation(educationLevel).Name;
             work = null;
+            income = 0;
         }
 
         public Person(Person sp)
@@ -79,26 +80,63 @@ namespace city_sim_game
             }
             birthday = People.GetRandomBirthday();
             educationLevel = rand.Next(8, 20);
-            Occupation occ = People.GetRandomOccupation(educationLevel);
-            occupation = occ.Name;
+            occupation = People.GetRandomOccupation(educationLevel).Name;
             work = null;
+            income = 0;
+        }
+
+        public Person(Person mom, Person dad)
+        {
+            mother = mom;
+            father = dad;
+            isMarried = false;
+            if (rand.Next(2) == 1)
+            {
+                isFemale = true;
+            }
+            else
+            {
+                isFemale = false;
+            }
+            firstName = People.GetRandomFirstName(isFemale);
+            if (father == null)
+            {
+                lastName = mother.LastName;
+            }
+            else
+            {
+                lastName = father.LastName;
+            }
+            birthday = new int[] {GameTime.Month, GameTime.Day, GameTime.Year};
+            educationLevel = 0;
+            occupation = null;
+            work = null;
+            spouse = null;
+            income = 0;
+            home = mother.Home;
         }
 
         public void FindJob()
         {
-            if (work == null)
+            if (work == null) //rework into while statement
             {
                 foreach (Job j in CitySimGame.AvailableJobs)
                 {
                     if (occupation.Equals(j.Name))
                     {
                         work = j.Workplace;
+                        income = j.Salary;
                         CitySimGame.AvailableJobs.Remove(j);
                         j.Workplace.HireEmployee(this, j);
                         break;
                     }
                 }
             }
+        }
+
+        public void GetMarried()
+        {
+            //need to write this
         }
 
         public string FirstName
@@ -230,6 +268,30 @@ namespace city_sim_game
             set
             {
                 spouse = value;
+            }
+        }
+
+        public Person Father
+        {
+            get
+            {
+                return father;
+            }
+            set
+            {
+                father = value;
+            }
+        }
+
+        public Person Mother
+        {
+            get
+            {
+                return mother;
+            }
+            set
+            {
+                mother = value;
             }
         }
     }

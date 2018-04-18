@@ -11,18 +11,30 @@ namespace city_sim_game
         private int lowIncomeResidential;
         private int mediumIncomeResidential;
         private int highIncomeResidential;
-        private int commercial;
-        private int industrial;
-        private int agricultural;
+        private int clothingStores;
+        private int groceryStores;
+        private int convenienceStores;
 
         public Demand()
         {
-            lowIncomeResidential = 50;
-            mediumIncomeResidential = 50;
-            highIncomeResidential = 50;
-            commercial = 50;
-            industrial = 50;
-            agricultural = 50;
+            lowIncomeResidential = 100;
+            mediumIncomeResidential = 100;
+            highIncomeResidential = 100;
+            clothingStores = 100;
+            groceryStores = 100;
+            convenienceStores = 100;
+        }
+
+        public bool CommercialDemandExists()
+        {
+            if (clothingStores > 0 || groceryStores > 0 || convenienceStores > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public int LowIncomeResidential
@@ -61,39 +73,39 @@ namespace city_sim_game
             }
         }
 
-        public int Commercial
+        public int ClothingStores
         {
             get
             {
-                return commercial;
+                return clothingStores;
             }
             set
             {
-                commercial = value;
+                clothingStores = value;
             }
         }
 
-        public int Industrial
+        public int GroceryStores
         {
             get
             {
-                return industrial;
+                return groceryStores;
             }
             set
             {
-                industrial = value;
+                groceryStores = value;
             }
         }
 
-        public int Agricultural
+        public int ConvenienceStores
         {
             get
             {
-                return agricultural;
+                return convenienceStores;
             }
             set
             {
-                agricultural = value;
+                convenienceStores = value;
             }
         }
     }

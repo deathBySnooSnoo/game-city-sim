@@ -6,8 +6,36 @@ using System.Threading.Tasks;
 
 namespace city_sim_game
 {
-    abstract class BusinessBuilding
+    interface IBusinessBuilding
     {
-        private int squareFeet;
+        int BuildingValue
+        {
+            get;
+            set;
+        }
+
+        int BusinessCount
+        {
+            get;
+            set;
+        }
+
+        int AvailableSpaces
+        {
+            get;
+            set;
+        }
+
+        Lot BuildingLot
+        {
+            get;
+            set;
+        }
+
+        int SquareFeet
+        {
+            get;
+            set;
+        }
     }
 }

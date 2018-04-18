@@ -20,4 +20,14 @@
     <Salary>60713</Salary>
     <Education>14</Education>
   </Occupation>
+  <Occupation>
+    <Name>driller</Name>
+    <Salary>63400</Salary>
+    <Education>14</Education>
+  </Occupation>
+  <Occupation>
+    <Name>pumper</Name>
+    <Salary>43040</Salary>
+    <Education>14</Education>
+  </Occupation>
 </Occupations>

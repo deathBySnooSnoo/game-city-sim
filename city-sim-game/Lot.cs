@@ -14,18 +14,26 @@ namespace city_sim_game
         private int landValue;
         private float acres;
         private Tuple<int, int> upperLeftCorner;
-        private Tuple<int, int> lowerRightCorner;
+        private int width;
+        private int height;
         private bool developed;
 
-        public Lot(char z, char d, Tuple<int, int> ulc, Tuple<int, int> lrc)
+        public Lot(char z, char d, Tuple<int, int> ulc, int w, int h)
         {
             zoneType = z;
             density = d;
             upperLeftCorner = ulc;
-            lowerRightCorner = lrc;
-            acres = (lrc.Item1 - ulc.Item1) * (lrc.Item2 - ulc.Item2) / 43560; //converting sq ft into acres. one tile is 100 sq ft MATH MAY BE WRONG
-            landValue = 100;
+            width = w;
+            height = h;
+            acres = width * height / 43560; //converting sq ft into acres. one tile is 100 sq ft MATH MAY BE WRONG
+            landValue = 100; //needs to be dynamic based on area
             developed = false;
+        }
+
+        public int DistanceFromNearestResidentialBuilding()
+        {
+            
+            return -1;
         }
 
         public string Address
@@ -100,15 +108,27 @@ namespace city_sim_game
             }
         }
 
-        public Tuple<int, int> LowerRightCorner
+        public int Width
         {
             get
             {
-                return lowerRightCorner;
+                return width;
             }
             set
             {
-                lowerRightCorner = value;
+                width = value;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
             }
         }
 

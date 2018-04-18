@@ -46,57 +46,48 @@ namespace city_sim_game
                         day = 1;
                     }
                     Console.WriteLine(month + "-" + day + "-" + year);
-                    //UpgradeZones();
-                    BuildNewZones();
                     SpawnPeople();
+                    HaveChildren();
                     EmploymentChange();
-                }
-            }
-        }
-
-        private void BuildNewZones()
-        {
-            //stupid simple
-            foreach (Lot l in CitySimGame.Map.Lots)
-            {
-                if (l.LandValue > 90 && l.ZoneType == 'a' && l.Developed == false && CitySimGame.Demands.Agricultural > 0)
-                {
-                    CitySimGame.Map.AddFarm(new Farm(l));
-                    l.Developed = true;
-                    CitySimGame.Demands.Agricultural--;
-                }
-                else if (l.LandValue > 90 && l.ZoneType == 'r' && l.Developed == false && CitySimGame.Demands.LowIncomeResidential > 0)
-                {
-                    CitySimGame.Map.AddHousing(new ResidentialBuilding(l));
-                    l.Developed = true;
-                    CitySimGame.Demands.LowIncomeResidential--;
-                }
-                else if (l.LandValue > 90 && l.ZoneType == 'c' && l.Developed == false && CitySimGame.Demands.Commercial > 0)
-                {
-                    CitySimGame.Map.AddShops(new CommercialBuilding(l));
-                    l.Developed = true;
-                    CitySimGame.Demands.Commercial--;
-                    CitySimGame.Businesses.Add(new Business(BusinessType.GetBusinessByZoning('c')[0].Type)); //actually shit, but testing
-                }
-                else if (l.LandValue > 90 && l.ZoneType == 'i' && l.Developed == false && CitySimGame.Demands.Industrial > 0)
-                {
-                    CitySimGame.Map.AddIndustry(new IndustrialBuilding(l));
-                    l.Developed = true;
-                    CitySimGame.Demands.Industrial--;
                 }
             }
         }
 
         private void SpawnPeople()
         {
-            while (CitySimGame.AvailableJobs.Count > 0 || CitySimGame.Population.Count < 10)
+            int newPersons = 0;
+            while (newPersons < CitySimGame.AvailableJobs.Count/2 || CitySimGame.Population.Count < 10)
             {
                 Person p = new Person();
                 CitySimGame.Population.Add(p);
+                newPersons++;
                 if (p.IsMarried)
                 {
                     CitySimGame.Population.Add(p.Spouse);
+                    newPersons++;
                 }
+            }
+        }
+
+        private void HaveChildren()
+        {
+            List<Person> newborns = new List<Person>();
+            foreach (Person p in CitySimGame.Population)
+            {
+                if (p.IsFemale && People.HaveBaby())
+                {
+                    newborns.Add(new Person(p, p.Spouse));
+                }
+            }
+            CitySimGame.Population.AddRange(newborns);
+        }
+
+        private void SpawnBusinesses()
+        {
+            //sort business demands here. pass highest and step through until exiting the loop
+            while (CitySimGame.Map.AvailableCommercial > 0 && CitySimGame.Demands.CommercialDemandExists()) //need better checks; maybe better feedback for where demand exists vs locations of available lots
+            {
+                CitySimGame.Businesses.Add(new Business());
             }
         }
 
@@ -106,11 +97,13 @@ namespace city_sim_game
             {
                 foreach (Person p in CitySimGame.Population)
                 {
-                    p.FindJob();
+                    if (p.Occupation != null)
+                    {
+                        p.FindJob();
+                    }
                 }
             }
         }
-
 
         public static int Month
         {

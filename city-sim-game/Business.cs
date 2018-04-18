@@ -9,29 +9,29 @@ namespace city_sim_game
     class Business
     {
         private string name;
-        private BusinessBuilding building;
+        private IBusinessBuilding building;
         private string bizType;
         private int revenue;
         private int employees;
         private List<Job> jobs;
 
-        public Business(string bt)
+        public Business()
         {
             name = "";
-            bizType = bt;
+            //bizType = null;
             revenue = 0;
             employees = 0;
             jobs = new List<Job>();
-            foreach (KeyValuePair<string, int> j in BusinessType.GetBusinessByType(bt).Jobs)
-            {
-                for (int i = 0; i < j.Value; i++)
-                {
-                    Job temp = new Job(this, Occupation.GetOccupationByName(j.Key));
-                    CitySimGame.AvailableJobs.Add(temp);
-                    jobs.Add(temp);
-                }
-            }
-            building = CitySimGame.Map.Shops[0]; //crap
+            //foreach (KeyValuePair<string, int> j in BusinessType.GetBusinessByType(bizType).Jobs)
+            //{
+            //    for (int i = 0; i < j.Value; i++)
+            //    {
+            //        Job temp = new Job(this, Occupation.GetOccupationByName(j.Key));
+            //        CitySimGame.AvailableJobs.Add(temp);
+            //        jobs.Add(temp);
+            //    }
+            //}
+            //building = null;
         }
 
         public void HireEmployee(Person employee, Job job)
@@ -70,7 +70,7 @@ namespace city_sim_game
             }
         }
 
-        public BusinessBuilding Building
+        public IBusinessBuilding Building
         {
             get
             {

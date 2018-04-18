@@ -10,15 +10,17 @@ namespace city_sim_game
     {
 
         private int key;
-        private char zoningList; //t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water
+        private char zoningList; //t=transport, r=residential, c=commercial, i=industrial, a=ag, w=water, j=junction
         private bool availableForZoning;
         private bool fertileSoil;
+        private int oil;
 
-        public Tile()
+        public Tile(byte oilContent)
         {
             key = -1;
             zoningList = '\0';
             availableForZoning = true;
+            oil = oilContent;
         }
 
         public int Key
@@ -66,6 +68,18 @@ namespace city_sim_game
             set
             {
                 fertileSoil = value;
+            }
+        }
+
+        public int Oil
+        {
+            get
+            {
+                return oil;
+            }
+            set
+            {
+                oil = value;
             }
         }
     }

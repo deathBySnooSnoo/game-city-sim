@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace city_sim_game
 {
-    class IndustrialBuilding : BusinessBuilding
+    class IndustrialBuilding
     {
         private int buildingValue;
         private int businessCount;
         private int availableSpaces;
-        private Lot lot;
+        private Lot buildingLot;
+        private int squareFeet;
 
         public IndustrialBuilding(Lot l)
         {
             buildingValue = 50000;
             businessCount = 1;
             availableSpaces = 1;
-            lot = l;
+            buildingLot = l;
+            squareFeet = 0; //change this to be an actual square footage
         }
 
         public int BuildingValue
@@ -57,15 +59,27 @@ namespace city_sim_game
             }
         }
 
-        public Lot Lot
+        public Lot BuildingLot
         {
             get
             {
-                return lot;
+                return buildingLot;
             }
             set
             {
-                lot = value;
+                buildingLot = value;
+            }
+        }
+
+        public int SquareFeet
+        {
+            get
+            {
+                return squareFeet;
+            }
+            set
+            {
+                squareFeet = value;
             }
         }
     }

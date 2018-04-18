@@ -15,9 +15,38 @@ namespace city_sim_game
         private Tuple<int, int> start; //center lane or tie break to the higher coordinate number center lane
         private Tuple<int, int> end;
         
-        public Road()
+        public Road(Tuple<int, int> s, Tuple<int, int> e, int laneCount, int sl, bool[] ld)
         {
+            start = s;
+            end = e;
+            lanes = laneCount;
+            speedLimit = sl;
+            name = "";
+            laneDirections = ld;
+        }
 
+        public int Lanes
+        {
+            get
+            {
+                return lanes;
+            }
+            set
+            {
+                lanes = value;
+            }
+        }
+
+        public bool[] LaneDirections
+        {
+            get
+            {
+                return laneDirections;
+            }
+            set
+            {
+                laneDirections = value;
+            }
         }
     }
 }

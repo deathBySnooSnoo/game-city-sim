@@ -104,4 +104,16 @@
       <Count>2</Count>
     </Job>
   </Business>
+  <Business>
+    <Zoning>i</Zoning>
+    <Type>oil rig</Type>
+    <Job>
+      <Title>driller</Title>
+      <Count>2</Count>
+    </Job>
+    <Job>
+      <Title>pumper</Title>
+      <Count>4</Count>
+    </Job>
+  </Business>
 </BusinessTypes>

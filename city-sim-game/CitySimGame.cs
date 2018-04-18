@@ -63,7 +63,7 @@ namespace city_sim_game
                 }
                 else if (input.Equals("list"))
                 {
-                    Console.WriteLine("Enter 'population', 'demands': ");
+                    Console.WriteLine("Enter 'population', 'demands', 'resources': ");
                     input = Console.ReadLine();
                     if (input.Equals("population"))
                     {
@@ -74,7 +74,20 @@ namespace city_sim_game
                     }
                     else if (input.Equals("demands"))
                     {
-                        Console.WriteLine("Ag: " + Demands.Agricultural + "\nResidential: " + Demands.LowIncomeResidential + "\nCommercial: " + Demands.Commercial + "\nIndustrial: " + Demands.Industrial);
+                        Console.WriteLine("Residential: " + Demands.LowIncomeResidential);
+                    }
+                    else if (input.Equals("resources"))
+                    {
+                        map.PrintResourcesOfTile();
+                    }
+                }
+                else if (input.Equals("road"))
+                {
+                    Console.WriteLine("Enter 'new' or 'edit': ");
+                    input = Console.ReadLine();
+                    if (input.Equals("new"))
+                    {
+                        map.NewRoad();
                     }
                 }
             }
@@ -95,7 +108,7 @@ namespace city_sim_game
 
         public static void Init()
         {
-            map = new Map(100, 100);
+            map = new Map();
             population = new List<Person>();
             availableJobs = new List<Job>();
             demands = new Demand();
@@ -175,6 +188,32 @@ namespace city_sim_game
             femaleNames = System.IO.File.ReadAllLines("FemaleNames.txt");
             maleNames = System.IO.File.ReadAllLines("MaleNames.txt");
             lastNames = System.IO.File.ReadAllLines("LastNames.txt");
+        }
+
+        public static bool ExistsBusinessWithNoLocation(string businessType)
+        {
+            bool exists = false;
+            foreach (Business b in businesses)
+            {
+                if (businessType.Equals(b.BizType) && b.Building == null)
+                {
+                    exists = true;
+                }
+            }
+            return exists;
+        }
+
+        public static List<Business> GetBusinessByType(string businessType)
+        {
+            List<Business> bizzes = new List<Business>();
+            foreach (Business b in businesses)
+            {
+                if (businessType.Equals(b.BizType))
+                {
+                    bizzes.Add(b);
+                }
+            }
+            return bizzes;
         }
 
         public static Map Map
