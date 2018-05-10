@@ -9,14 +9,12 @@ namespace city_sim_game
     class Intersection
     {
         private string id;
-        private Tuple<int, int> upperLeftCorner;
-        private Tuple<int, int> lowerRightCorner;
+        private Tuple<int, int> center;
 
-        public Intersection(Tuple<int, int> ulc, Tuple<int, int> lrc)
+        public Intersection(Tuple<int, int> c)
         {
             id = "";
-            upperLeftCorner = ulc;
-            lowerRightCorner = lrc;
+            center = c;
         }
 
         public string Id
@@ -31,27 +29,15 @@ namespace city_sim_game
             }
         }
 
-        public Tuple<int, int> UpperLeftCorner
+        public Tuple<int, int> Center
         {
             get
             {
-                return upperLeftCorner;
+                return center;
             }
             set
             {
-                upperLeftCorner = value;
-            }
-        }
-
-        public Tuple<int, int> LowerRightCorner
-        {
-            get
-            {
-                return lowerRightCorner;
-            }
-            set
-            {
-                lowerRightCorner = value;
+                center = value;
             }
         }
     }

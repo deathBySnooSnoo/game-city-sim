@@ -9,13 +9,13 @@ namespace city_sim_game
     class Road
     {
         private int lanes;
-        private bool[] laneDirections; //true is away from camera when looking along the road/left to right when horizontal; false is toward camera when looking along the road/right to left when horizontal
+        private bool[] laneDirections; //true is positive direction; false is negative direction
         private int speedLimit;
         private string name;
-        private Tuple<int, int> start; //center lane or tie break to the higher coordinate number center lane
-        private Tuple<int, int> end;
+        private Intersection start;
+        private Intersection end;
         
-        public Road(Tuple<int, int> s, Tuple<int, int> e, int laneCount, int sl, bool[] ld)
+        public Road(Intersection s, Intersection e, int laneCount, int sl, bool[] ld)
         {
             start = s;
             end = e;
@@ -46,6 +46,54 @@ namespace city_sim_game
             set
             {
                 laneDirections = value;
+            }
+        }
+
+        public int SpeedLimit
+        {
+            get
+            {
+                return speedLimit;
+            }
+            set
+            {
+                speedLimit = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public Intersection Start
+        {
+            get
+            {
+                return start;
+            }
+            set
+            {
+                start = value;
+            }
+        }
+
+        public Intersection End
+        {
+            get
+            {
+                return end;
+            }
+            set
+            {
+                end = value;
             }
         }
     }

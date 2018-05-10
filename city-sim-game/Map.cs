@@ -231,7 +231,6 @@ namespace city_sim_game
                     }
                 }
             }
-            //new Road(new Tuple<int, int>(x1, y1), new Tuple<int, int>(x2, y2),)
         }
 
         private void DestroyRoad(int x1, int y1, int x2, int y2)

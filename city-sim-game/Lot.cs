@@ -15,17 +15,17 @@ namespace city_sim_game
         private float acres;
         private Tuple<int, int> upperLeftCorner;
         private int width;
-        private int height;
+        private int depth;
         private bool developed;
 
-        public Lot(char z, char d, Tuple<int, int> ulc, int w, int h)
+        public Lot(char z, char den, Tuple<int, int> ulc, int w, int dep)
         {
             zoneType = z;
-            density = d;
+            density = den;
             upperLeftCorner = ulc;
             width = w;
-            height = h;
-            acres = width * height / 43560; //converting sq ft into acres. one tile is 100 sq ft MATH MAY BE WRONG
+            depth = dep;
+            acres = width * depth * 100/ 43560; //converting sq ft into acres
             landValue = 100; //needs to be dynamic based on area
             developed = false;
         }
@@ -120,15 +120,15 @@ namespace city_sim_game
             }
         }
 
-        public int Height
+        public int Depth
         {
             get
             {
-                return height;
+                return depth;
             }
             set
             {
-                height = value;
+                depth = value;
             }
         }
 
