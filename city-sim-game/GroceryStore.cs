@@ -30,26 +30,42 @@ namespace city_sim_game
                     Jobs.Add(temp);
                 }
             }
-            building = null;
+            building = FindLocationForBusiness();
         }
 
-        private void FindLocationForBusiness()
+        private CommercialBuilding FindLocationForBusiness()
         {
             List<CommercialBuilding> availableBuildings = CitySimGame.Map.GetAvailableCommercialBuildings();
-            if (availableBuildings == null)
-            {
-
-            }
-            else
+            if (availableBuildings != null || availableBuildings.Count > 0)
             {
                 foreach (CommercialBuilding cb in availableBuildings)
                 {
-                    
+                    if (CitySimGame.Map.DistanceToNearestBusinessOfType(bizType, cb.BuildingLot) > 3) //miles
+                    {
+                        cb.BusinessCount++;
+                        return cb;
+                    }
                 }
             }
+            else if (CitySimGame.Map.AvailableCommercial > 0)
+            {
+                foreach (Lot l in CitySimGame.Map.Lots)
+                {
+                    if (l.ZoneType == 'c')
+                    {
+                        if (CitySimGame.Map.DistanceToNearestBusinessOfType(bizType, l) > 3) //miles
+                        {
+                            l.Developed = true;
+                            return CitySimGame.Map.AddShops(new CommercialBuilding(l, 1, 1, 1));
+                        }
+                    }
+                }
+            }
+            CitySimGame.Demands.CommercialLots++;
+            return null;
         }
 
-        public String BizType
+        public new String BizType
         {
             get
             {
@@ -57,7 +73,7 @@ namespace city_sim_game
             }
         }
 
-        public CommercialBuilding Building
+        public new CommercialBuilding Building
         {
             get
             {

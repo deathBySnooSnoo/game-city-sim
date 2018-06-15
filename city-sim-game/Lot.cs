@@ -30,12 +30,6 @@ namespace city_sim_game
             developed = false;
         }
 
-        public int DistanceFromNearestResidentialBuilding()
-        {
-            
-            return -1;
-        }
-
         public string Address
         {
             get

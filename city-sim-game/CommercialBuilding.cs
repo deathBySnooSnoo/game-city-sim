@@ -15,7 +15,7 @@ namespace city_sim_game
         private Lot buildingLot;
         private int squareFeet;
 
-        public CommercialBuilding(Lot l)
+        public CommercialBuilding(Lot l, int floorCount, int availableBusinessSpaces, int currentBusinessCount)
         {
             floors = 1;
             buildingValue = 50000;

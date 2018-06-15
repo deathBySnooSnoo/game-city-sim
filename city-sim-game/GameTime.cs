@@ -85,9 +85,9 @@ namespace city_sim_game
         private void SpawnBusinesses()
         {
             //sort business demands here. pass highest and step through until exiting the loop
-            while (CitySimGame.Map.AvailableCommercial > 0 && CitySimGame.Demands.CommercialDemandExists()) //need better checks; maybe better feedback for where demand exists vs locations of available lots
+            if (CitySimGame.Demands.CommercialDemandExists())
             {
-                CitySimGame.Businesses.Add(new Business());
+
             }
         }
 

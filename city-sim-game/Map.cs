@@ -15,6 +15,7 @@ namespace city_sim_game
         private List<ResidentialBuilding> housing;
         private List<CommercialBuilding> shops;
         private List<IndustrialBuilding> industry;
+        private List<Intersection> intersections;
         private int availableAg;
         private int availableResidential;
         private int availableCommercial;
@@ -23,19 +24,12 @@ namespace city_sim_game
         public Map()
         {
             Bitmap oilmap = new Bitmap("Oil_Map.bmp");
-            tiles = new Tile[oilmap.Width, oilmap.Height];
-            for (int i = 0; i < oilmap.Width; i++)
-            {
-                for (int j = 0; j < oilmap.Height; j++)
-                {
-                    tiles[i, j] = new Tile(oilmap.GetPixel(i,j).B);
-                }
-            }
             lots = new List<Lot>();
             farms = new List<Farm>();
             housing = new List<ResidentialBuilding>();
             shops = new List<CommercialBuilding>();
             industry = new List<IndustrialBuilding>();
+            intersections = new List<Intersection>();
             availableAg = 0;
             availableCommercial = 0;
             availableIndustrial = 0;
@@ -80,26 +74,6 @@ namespace city_sim_game
                 index = lots.Count - 1;
                 availableIndustrial++;
             }
-            if (index > -1)
-            {
-                for (int i = x1; i < h + 1; i++)
-                {
-                    for (int j = y1; j < w + 1; j++)
-                    {
-                        if (tiles[i, j].AvailableForZoning)
-                        {
-                            tiles[i, j].ZoningList = z;
-                            tiles[i, j].Key = index;
-                            tiles[i, j].AvailableForZoning = false;
-                        }
-                        else
-                        {
-                            RemoveZone(x1, y1, i, j);
-                            return;
-                        }
-                    }
-                }
-            }
         }
 
         public void CheckZone()
@@ -127,47 +101,17 @@ namespace city_sim_game
 
         private void RemoveZone(int x1, int y1, int x2, int y2)
         {
-            for (int i = x2; i > x1 - 1; i--)
-            {
-                for (int j = y2; j > y1 - 1; j--)
-                {
-                    if (i == x1 && j == y1)
-                    {
-                        if (tiles[i, j].ZoningList == 'r')
-                        {
-                            availableResidential--;
-                        }
-                        else if (tiles[i, j].ZoningList == 'c')
-                        {
-                            availableCommercial--;
-                        }
-                        else if (tiles[i, j].ZoningList == 'a')
-                        {
-                            availableAg--;
-                        }
-                        else if (tiles[i, j].ZoningList == 'i')
-                        {
-                            availableIndustrial--;
-                        }
-                        lots.RemoveAt(tiles[i, j].Key);
-                    }
-                    tiles[i, j].AvailableForZoning = true;
-                    tiles[i, j].Key = -1;
-                    tiles[i, j].ZoningList = '\0';
-                }
-            }
-        }
 
-        public void PrintResourcesOfTile()
-        {
-            int x = ReadXCoordinate();
-            int y = ReadYCoordinate();
-            Console.WriteLine(tiles[x, y].Oil.ToString());
         }
 
         public Lot GetLot(int x, int y)
         {
             return lots[tiles[x, y].Key];
+        }
+
+        public double DistanceToNearestBusinessOfType(string bizType, Lot lot)
+        {
+            return 0;
         }
 
         public List<ResidentialBuilding> GetAvailableHouses()
@@ -198,51 +142,17 @@ namespace city_sim_game
 
         public void NewRoad()
         {
-            int x1 = ReadXCoordinate();
-            int y1 = ReadYCoordinate();
-            int x2 = ReadXCoordinate();
-            int y2 = ReadYCoordinate();
-            BuildRoad(x1, y1, x2, y2);
+            BuildRoad(ReadXCoordinate(), ReadYCoordinate(), ReadXCoordinate(), ReadYCoordinate());
         }
 
         private void BuildRoad(int x1, int y1, int x2, int y2)
         {
-            for (int i = x1; i < x2; i++)
-            {
-                for (int j = y1; j < y2; j++)
-                {
-                    if (tiles[i, j].AvailableForZoning)
-                    {
-                        tiles[i, j].AvailableForZoning = false;
-                        tiles[i, j].ZoningList = 't';
-                    }
-                    else if (tiles[i, j].AvailableForZoning == false && tiles[i, j].ZoningList == 't')
-                    {
-                        //replace with intersection if perpendicular else resume loop after that road if shorter than loop
-                    }
-                    else if (tiles[i, j].AvailableForZoning == false && tiles[i, j].ZoningList == 'j')
-                    {
-                        //already an intersection so update it; most likely a T intersection currently
-                    }
-                    else
-                    {
-                        DestroyRoad(x1, y1, i, j);
-                        return;
-                    }
-                }
-            }
+            
         }
 
         private void DestroyRoad(int x1, int y1, int x2, int y2)
         {
-            for (int i = x2; i > x1 - 1; i--)
-            {
-                for (int j = y2; j > y1 - 1; j--)
-                {
-                    tiles[i, j].AvailableForZoning = true;
-                    tiles[i, j].ZoningList = '\0';
-                }
-            }
+
         }
 
         #region CommandLine Specific Reads
@@ -291,9 +201,10 @@ namespace city_sim_game
             }
         }
 
-        public void AddFarm(Farm f)
+        public Farm AddFarm(Farm f)
         {
             farms.Add(f);
+            return f;
         }
 
         public void RemoveFarm(Farm f)
@@ -309,9 +220,10 @@ namespace city_sim_game
             }
         }
 
-        public void AddHousing(ResidentialBuilding r)
+        public ResidentialBuilding AddHousing(ResidentialBuilding r)
         {
             housing.Add(r);
+            return r;
         }
 
         public void RemoveHousing(ResidentialBuilding r)
@@ -327,9 +239,10 @@ namespace city_sim_game
             }
         }
 
-        public void AddShops(CommercialBuilding c)
+        public CommercialBuilding AddShops(CommercialBuilding c)
         {
             shops.Add(c);
+            return c;
         }
 
         public void RemoveShops(CommercialBuilding c)
@@ -345,14 +258,23 @@ namespace city_sim_game
             }
         }
 
-        public void AddIndustry(IndustrialBuilding i)
+        public IndustrialBuilding AddIndustry(IndustrialBuilding i)
         {
             industry.Add(i);
+            return i;
         }
 
         public void RemoveIndustry(IndustrialBuilding i)
         {
             industry.Remove(i);
+        }
+
+        public List<Intersection> Intersections
+        {
+            get
+            {
+                return intersections;
+            }
         }
 
         public int AvailableAg

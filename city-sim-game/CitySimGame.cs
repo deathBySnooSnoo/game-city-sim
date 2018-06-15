@@ -21,6 +21,7 @@ namespace city_sim_game
         private static string[] maleNames = null;
         private static string[] femaleNames = null;
         private static string[] lastNames = null;
+        private static string mapFilePath = "";
 
         public static void Main(string[] args)
         {
@@ -78,7 +79,7 @@ namespace city_sim_game
                     }
                     else if (input.Equals("resources"))
                     {
-                        map.PrintResourcesOfTile();
+                        
                     }
                 }
                 else if (input.Equals("road"))
@@ -188,6 +189,8 @@ namespace city_sim_game
             femaleNames = System.IO.File.ReadAllLines("FemaleNames.txt");
             maleNames = System.IO.File.ReadAllLines("MaleNames.txt");
             lastNames = System.IO.File.ReadAllLines("LastNames.txt");
+            Console.WriteLine("Map file location: ");
+            mapFilePath = Console.ReadLine();
         }
 
         public static bool ExistsBusinessWithNoLocation(string businessType)
@@ -305,6 +308,14 @@ namespace city_sim_game
             set
             {
                 lastNames = value;
+            }
+        }
+
+        public static string MapFilePath
+        {
+            get
+            {
+                return mapFilePath;
             }
         }
     }

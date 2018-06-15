@@ -14,15 +14,17 @@ namespace city_sim_game
         private int clothingStores;
         private int groceryStores;
         private int convenienceStores;
+        private int commercialLots;
 
         public Demand()
         {
             lowIncomeResidential = 100;
             mediumIncomeResidential = 100;
             highIncomeResidential = 100;
-            clothingStores = 100;
-            groceryStores = 100;
-            convenienceStores = 100;
+            clothingStores = 1;
+            groceryStores = 1;
+            convenienceStores = 1;
+            commercialLots = 50;
         }
 
         public bool CommercialDemandExists()
@@ -106,6 +108,18 @@ namespace city_sim_game
             set
             {
                 convenienceStores = value;
+            }
+        }
+
+        public int CommercialLots
+        {
+            get
+            {
+                return commercialLots;
+            }
+            set
+            {
+                commercialLots = value;
             }
         }
     }
