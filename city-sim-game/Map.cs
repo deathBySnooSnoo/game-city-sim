@@ -111,6 +111,12 @@ namespace city_sim_game
 
         public double DistanceToNearestBusinessOfType(string bizType, Lot lot)
         {
+            //if "bizType" is "any" search for any commercial lot
+            return 0;
+        }
+
+        public double DistanceToNearestResidence(Lot lot) //have one for a cluster of residences too?
+        {
             return 0;
         }
 

@@ -9,12 +9,24 @@ namespace city_sim_game
     class Intersection
     {
         private string id;
-        private Tuple<int, int> center;
+        private List<Road> connectedRoads;
 
-        public Intersection(Tuple<int, int> c)
+        public Intersection()
         {
-            id = "";
-            center = c;
+            //id = something unique
+            connectedRoads = new List<Road>();
+        }
+
+        public Road GetConnection(Intersection x)
+        {
+            foreach (Road r in connectedRoads)
+            {
+                if (r.GetOppositeEnd(this) == x)
+                {
+                    return r;
+                }
+            }
+            return null;
         }
 
         public string Id
@@ -29,15 +41,18 @@ namespace city_sim_game
             }
         }
 
-        public Tuple<int, int> Center
+        public List<Road> ConnectedRoads
         {
             get
             {
-                return center;
+                return connectedRoads;
             }
-            set
+        }
+        public void AddConnectedRoad(Road r)
+        {
+            if (!connectedRoads.Contains(r))
             {
-                center = value;
+                connectedRoads.Add(r);
             }
         }
     }

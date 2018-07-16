@@ -28,7 +28,7 @@ namespace city_sim_game
             Init();
             Thread timeThread = new Thread(TimePassage);
             timeThread.Start();
-            while (!quit)
+            while (!quit) //running a console app from here. delete after gui made.
             {
                 string input = Console.ReadLine();
                 if (input.Equals("pause"))

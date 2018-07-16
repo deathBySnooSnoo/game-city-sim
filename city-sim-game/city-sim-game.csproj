@@ -48,6 +48,7 @@
     <Compile Include="BusinessType.cs" />
     <Compile Include="CitySimGame.cs" />
     <Compile Include="CommercialBuilding.cs" />
+    <Compile Include="ConvenienceStore.cs" />
     <Compile Include="Demand.cs" />
     <Compile Include="Farm.cs" />
     <Compile Include="GameTime.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Lake.cs" />
     <Compile Include="Lot.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Navigation.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="People.cs" />
     <Compile Include="Person.cs" />

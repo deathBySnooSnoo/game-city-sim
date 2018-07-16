@@ -2,32 +2,62 @@
 <Occupations>
   <Occupation>
     <Name>farmer</Name>
-    <Salary>41000</Salary>
+    <Salary>41000</Salary><!--Not BoLS Median-->
     <Education>8</Education>
   </Occupation>
   <Occupation>
     <Name>farm hand</Name>
-    <Salary>30000</Salary>
+    <Salary>30600</Salary>
     <Education>8</Education>
   </Occupation>
   <Occupation>
     <Name>cashier</Name>
-    <Salary>19310</Salary>
+    <Salary>21030</Salary>
     <Education>8</Education>
   </Occupation>
   <Occupation>
     <Name>general manager</Name>
-    <Salary>60713</Salary>
+    <Salary>60713</Salary><!--Not BoLS Median-->
     <Education>14</Education>
   </Occupation>
   <Occupation>
     <Name>driller</Name>
-    <Salary>63400</Salary>
+    <Salary>53980</Salary>
     <Education>14</Education>
   </Occupation>
   <Occupation>
     <Name>pumper</Name>
-    <Salary>43040</Salary>
+    <Salary>46140</Salary>
+    <Education>14</Education>
+  </Occupation>
+  <Occupation>
+    <Name>high school teacher</Name>
+    <Salary>59170</Salary>
+    <Education>16</Education>
+  </Occupation>
+  <Occupation>
+    <Name>middle school teacher</Name>
+    <Salary>57720</Salary>
+    <Education>16</Education>
+  </Occupation>
+  <Occupation>
+    <Name>elementary teacher</Name>
+    <Salary>57160</Salary>
+    <Education>16</Education>
+  </Occupation>
+  <Occupation>
+    <Name>police officer</Name>
+    <Salary>61050</Salary>
+    <Education>12</Education>
+  </Occupation>
+  <Occupation>
+    <Name>lawyer</Name>
+    <Salary>119250</Salary>
+    <Education>19</Education>
+  </Occupation>
+  <Occupation>
+    <Name>accountant</Name>
+    <Salary>69350</Salary>
     <Education>14</Education>
   </Occupation>
 </Occupations>

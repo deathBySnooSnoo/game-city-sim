@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace city_sim_game
 {
-    class GroceryStore : Business
+    class ConvenienceStore : Business
     {
-        private const string bizType = "grocery store";
+        private const string bizType = "convenience store";
         private string name;
         private int revenue;
         private int employees;
         private List<Job> jobs;
         private CommercialBuilding building;
 
-        public GroceryStore()
+        public ConvenienceStore()
         {
             Name = "";
             Revenue = 0;
@@ -40,7 +40,7 @@ namespace city_sim_game
             {
                 foreach (CommercialBuilding cb in availableBuildings)
                 {
-                    if (CitySimGame.Map.DistanceToNearestBusinessOfType(bizType, cb.BuildingLot) > 3 && CitySimGame.Map.DistanceToNearestResidence(cb.BuildingLot) < 1) //miles; should figure out how to change it for travel time for typical mode of travel
+                    if (CitySimGame.Map.DistanceToNearestBusinessOfType(bizType, cb.BuildingLot) > 1 && CitySimGame.Map.DistanceToNearestResidence(cb.BuildingLot) < 1) //miles; should figure out how to change it for travel time for typical mode of travel
                     {
                         cb.BusinessCount++;
                         return cb;
@@ -53,7 +53,7 @@ namespace city_sim_game
                 {
                     if (l.ZoneType == 'c')
                     {
-                        if (CitySimGame.Map.DistanceToNearestBusinessOfType(bizType, l) > 3 && CitySimGame.Map.DistanceToNearestResidence(l) < 1) //miles
+                        if (CitySimGame.Map.DistanceToNearestBusinessOfType(bizType, l) > 1 && CitySimGame.Map.DistanceToNearestResidence(l) < 1) //miles
                         {
                             l.Developed = true;
                             return CitySimGame.Map.AddShops(new CommercialBuilding(l, 1, 1, 1));

@@ -14,8 +14,9 @@ namespace city_sim_game
         private string name;
         private Intersection start;
         private Intersection end;
+        private double distance;
         
-        public Road(Intersection s, Intersection e, int laneCount, int sl, bool[] ld)
+        public Road(Intersection s, Intersection e, int laneCount, int sl, bool[] ld, double length)
         {
             start = s;
             end = e;
@@ -23,6 +24,23 @@ namespace city_sim_game
             speedLimit = sl;
             name = "";
             laneDirections = ld;
+            distance = length;
+        }
+
+        public Intersection GetOppositeEnd(Intersection x)
+        {
+            if (start == x)
+            {
+                return end;
+            }
+            else if (end == x)
+            {
+                return start;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public int Lanes
@@ -94,6 +112,26 @@ namespace city_sim_game
             set
             {
                 end = value;
+            }
+        }
+
+        public double Distance
+        {
+            get
+            {
+                return distance;
+            }
+            set
+            {
+                distance = value;
+            }
+        }
+
+        public double OptimalTraversalTime
+        {
+            get
+            {
+                return distance / speedLimit;
             }
         }
     }
