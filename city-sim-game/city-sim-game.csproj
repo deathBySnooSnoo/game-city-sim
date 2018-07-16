@@ -67,7 +67,6 @@
     <Compile Include="ResidentialBuilding.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Road.cs" />
-    <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

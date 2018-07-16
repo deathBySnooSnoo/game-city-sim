@@ -21,77 +21,12 @@ namespace city_sim_game
         private static string[] maleNames = null;
         private static string[] femaleNames = null;
         private static string[] lastNames = null;
-        private static string mapFilePath = "";
 
         public static void Main(string[] args)
         {
             Init();
             Thread timeThread = new Thread(TimePassage);
             timeThread.Start();
-            while (!quit) //running a console app from here. delete after gui made.
-            {
-                string input = Console.ReadLine();
-                if (input.Equals("pause"))
-                {
-                    paused = !paused;
-                }
-                else if (input.Equals("quit"))
-                {
-                    quit = true;
-                    paused = true;
-                    timeThread.Abort();
-                }
-                else if (input.Equals("zone"))
-                {
-                    Console.WriteLine("Enter 'new', 'change', 'check', or 'remove': ");
-                    input = Console.ReadLine();
-                    if (input.Equals("new"))
-                    {
-                        map.Zone();
-                    }
-                    else if (input.Equals("check"))
-                    {
-                        map.CheckZone();
-                    }
-                    else if (input.Equals("change"))
-                    {
-                        map.ChangeZone();
-                    }
-                    else if (input.Equals("remove"))
-                    {
-                        map.Dezone();
-                    }
-                }
-                else if (input.Equals("list"))
-                {
-                    Console.WriteLine("Enter 'population', 'demands', 'resources': ");
-                    input = Console.ReadLine();
-                    if (input.Equals("population"))
-                    {
-                        foreach(Person p  in Population)
-                        {
-                            Console.WriteLine(p.FirstName + " " + p.LastName);
-                        }
-                    }
-                    else if (input.Equals("demands"))
-                    {
-                        Console.WriteLine("Residential: " + Demands.LowIncomeResidential);
-                    }
-                    else if (input.Equals("resources"))
-                    {
-                        
-                    }
-                }
-                else if (input.Equals("road"))
-                {
-                    Console.WriteLine("Enter 'new' or 'edit': ");
-                    input = Console.ReadLine();
-                    if (input.Equals("new"))
-                    {
-                        map.NewRoad();
-                    }
-                }
-            }
         }
 
         private static void TimePassage()
@@ -189,8 +124,6 @@ namespace city_sim_game
             femaleNames = System.IO.File.ReadAllLines("FemaleNames.txt");
             maleNames = System.IO.File.ReadAllLines("MaleNames.txt");
             lastNames = System.IO.File.ReadAllLines("LastNames.txt");
-            Console.WriteLine("Map file location: ");
-            mapFilePath = Console.ReadLine();
         }
 
         public static bool ExistsBusinessWithNoLocation(string businessType)
@@ -308,14 +241,6 @@ namespace city_sim_game
             set
             {
                 lastNames = value;
-            }
-        }
-
-        public static string MapFilePath
-        {
-            get
-            {
-                return mapFilePath;
             }
         }
     }

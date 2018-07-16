@@ -12,22 +12,22 @@ namespace city_sim_game
         private char zoneType;
         private char density;
         private int landValue;
-        private float acres;
-        private Tuple<int, int> upperLeftCorner;
+        private double distanceFromLeftIntersection; //probably should specify intersection
         private int width;
         private int depth;
         private bool developed;
+        private Road street;
 
-        public Lot(char z, char den, Tuple<int, int> ulc, int w, int dep)
+        public Lot(char z, char den, double dfli, int w, int dep, Road s)
         {
             zoneType = z;
             density = den;
-            upperLeftCorner = ulc;
+            distanceFromLeftIntersection = dfli;
             width = w;
             depth = dep;
-            acres = width * depth * 100/ 43560; //converting sq ft into acres
-            landValue = 100; //needs to be dynamic based on area
+            landValue = 100; //needs to be dynamic based on surroundings
             developed = false;
+            street = s;
         }
 
         public string Address
@@ -78,27 +78,23 @@ namespace city_sim_game
             }
         }
 
-        public float Acres
+        public float Area
         {
             get
             {
-                return acres;
-            }
-            set
-            {
-                acres = value;
+                return width * depth;
             }
         }
 
-        public Tuple<int, int> UpperLeftCorner
+        public double DistanceFromLeftIntersection
         {
             get
             {
-                return upperLeftCorner;
+                return distanceFromLeftIntersection;
             }
             set
             {
-                upperLeftCorner = value;
+                distanceFromLeftIntersection = value;
             }
         }
 
@@ -135,6 +131,18 @@ namespace city_sim_game
             set
             {
                 developed = value;
+            }
+        }
+
+        public Road Street
+        {
+            get
+            {
+                return street;
+            }
+            set
+            {
+                street = value;
             }
         }
     }
